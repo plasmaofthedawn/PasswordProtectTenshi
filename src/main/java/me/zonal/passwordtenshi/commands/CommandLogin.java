@@ -21,6 +21,11 @@ public class CommandLogin implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§bPPTenshi says§r: fuck off console user");
+            return true;
+        }
+
+        if (args.length == 0) {
+            sender.sendMessage("§bPPTenshi says§r: enter a password");
             return false;
         }
 
@@ -48,16 +53,16 @@ public class CommandLogin implements CommandExecutor {
                 return true;
             } else {
                 sender.sendMessage("§bPPTenshi says§r: that ain't the right password");
-                return false;
+                return true;
             }
         } catch (NullPointerException e) {
             sender.sendMessage("§bPPTenshi says§r: register first pls");
-            return false;
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
-        return false;
+        return true;
     }
 }

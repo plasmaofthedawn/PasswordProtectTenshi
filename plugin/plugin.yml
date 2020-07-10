@@ -1,5 +1,5 @@
 name: PasswordProtectTenshi
-version: 1.1.2
+version: 1.2.1
 author: zonal and stolen code
 main: me.zonal.passwordtenshi.PasswordTenshi
 api-version: 1.16
@@ -9,8 +9,11 @@ commands:
     description: Register a pasword to your account
     usage: /register <password>
   unregister:
-    description: Unregister your account
+    description: Unregister the password from your account
     usage: /unregister
   login:
-    description: Login into the game
+    description: Login using your password into the game
     usage: /login <password>
+  resetplayer:
+    description: Admin only, removes a guy's password
+    usage: /resetplayer <player>

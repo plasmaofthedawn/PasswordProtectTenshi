@@ -2,7 +2,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 apply plugin: 'java'
 
 group = 'me.zonal'
-version = '1.0'
+version = '1.2.1'
 archivesBaseName = 'passwordtenshi'
 
 def spigotVersion = '1.16.1-R0.1-SNAPSHOT'
