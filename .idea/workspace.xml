@@ -25,16 +25,12 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:zonal" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2942710-9970-4667-a803-3c9d5ed392be" name="Default Changelist" comment="fixed my ide somehow">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/PasswordProtectTenshi_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PasswordProtectTenshi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PasswordProtectTenshi.iml" afterDir="false" />
-    </list>
+    <list default="true" id="d2942710-9970-4667-a803-3c9d5ed392be" name="Default Changelist" comment="test" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,10 +57,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/spigot/spigot-1.16.1.jar!/org" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -84,7 +80,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594417102946</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="test">
+      <created>1594417958693</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1594417958693</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -98,7 +101,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="zonal" />
                       </list>
                     </value>
                   </entry>
@@ -112,7 +115,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fixed my ide somehow" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed my ide somehow" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1594413125809">
@@ -143,10 +147,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="646" y="295" key="NewModule_or_Project.wizard/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594416357072" />
-    <state x="350" y="189" key="SettingsEditor" timestamp="1594417519522">
+    <state x="350" y="189" key="SettingsEditor" timestamp="1594418018006">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="350" y="189" key="SettingsEditor/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594417519522" />
+    <state x="350" y="189" key="SettingsEditor/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594418018006" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594417825222">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

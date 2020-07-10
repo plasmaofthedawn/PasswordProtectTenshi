@@ -21,6 +21,11 @@ public class CommandRegister implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§bPPTenshi says§r: fuck off console user");
+            return true;
+        }
+
+        if (args.length == 0) {
+            sender.sendMessage("§bPPTenshi says§r: enter a password");
             return false;
         }
 
@@ -30,7 +35,7 @@ public class CommandRegister implements CommandExecutor {
 
         if(pt.getPasswordHash(player.getUniqueId()) != null) {
             sender.sendMessage("§bPPTenshi says§r: you already have a password");
-            return false;
+            return true;
         }
 
         try {

@@ -20,7 +20,7 @@ public class CommandUnregister implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§bPPTenshi says§r: fuck off console user");
-            return false;
+            return true;
         }
 
         Player player = (Player) sender;
