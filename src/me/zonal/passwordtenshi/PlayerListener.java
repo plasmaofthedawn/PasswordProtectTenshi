@@ -1,7 +1,9 @@
 package me.zonal.passwordtenshi;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -131,10 +133,14 @@ public class PlayerListener implements Listener {
         // Prevent moving
         final Location from = event.getFrom();
         final Location to = event.getTo();
-        if(from.getBlockX() != to.getBlockX() || from.getBlockZ() != to.getBlockZ()) {
+        if(from.getBlockX() != to.getBlockX() || from.getBlockY() != to.getBlockY() || from.getBlockZ() != to.getBlockZ()) {
             event.setTo(event.getFrom());
         }
 
+        // TODO: this is a quick fix
+        if (event.getPlayer().getLocation().getBlock().getType() == Material.NETHER_PORTAL) {
+            event.getPlayer().setGameMode(GameMode.SPECTATOR);
+        }
 
         event.getPlayer().sendMessage("PPTenshi says: login or register you baka");
 

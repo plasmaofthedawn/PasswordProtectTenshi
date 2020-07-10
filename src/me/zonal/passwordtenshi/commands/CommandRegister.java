@@ -2,6 +2,7 @@ package me.zonal.passwordtenshi.commands;
 
 import me.zonal.passwordtenshi.PasswordChecker;
 import me.zonal.passwordtenshi.PasswordTenshi;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,6 +37,12 @@ public class CommandRegister implements CommandExecutor {
             String hash = PasswordChecker.getSaltedHash(password);
             pt.setPasswordHash(player.getUniqueId(), hash);
             pt.setAuthorized(player.getUniqueId(), true);
+
+            // TODO: make this not such a quick fix
+            if (player.getGameMode() == GameMode.SPECTATOR) {
+                player.setGameMode(GameMode.SURVIVAL);
+            }
+
             sender.sendMessage("PPTenshi says: i got your password now <3");
             return true;
         } catch (Exception e) {
