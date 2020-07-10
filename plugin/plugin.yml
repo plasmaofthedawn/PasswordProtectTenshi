@@ -9,8 +9,8 @@ commands:
     description: Register a pasword to your account
     usage: /register <password>
   unregister:
-    description: Unregister your account
+    description: Unregister the password from your account
     usage: /unregister
   login:
-    description: Login into the game
+    description: Login using your password into the game
     usage: /login <password>
