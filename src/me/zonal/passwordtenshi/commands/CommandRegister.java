@@ -20,7 +20,7 @@ public class CommandRegister implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("PPTenshi says: fuck off console user");
+            sender.sendMessage("§bPPTenshi says§r: fuck off console user");
             return false;
         }
 
@@ -29,7 +29,7 @@ public class CommandRegister implements CommandExecutor {
         final String password = args[0];
 
         if(pt.getPasswordHash(player.getUniqueId()) != null) {
-            sender.sendMessage("PPTenshi says: you already have a password");
+            sender.sendMessage("§bPPTenshi says§r: you already have a password");
             return false;
         }
 
@@ -43,13 +43,13 @@ public class CommandRegister implements CommandExecutor {
                 player.setGameMode(GameMode.SURVIVAL);
             }
 
-            sender.sendMessage("PPTenshi says: i got your password now <3");
+            sender.sendMessage("§bPPTenshi says§r: i got your password now <3");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        sender.sendMessage("PPTenshi says: fuxk fuck fuck fuck");
+        sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
         return true;
     }
 }

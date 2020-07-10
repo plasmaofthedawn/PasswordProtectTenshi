@@ -20,7 +20,7 @@ public class CommandLogin implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("PPTenshi says: fuck off console user");
+            sender.sendMessage("§bPPTenshi says§r: fuck off console user");
             return false;
         }
 
@@ -28,7 +28,7 @@ public class CommandLogin implements CommandExecutor {
         final String password = args[0];
 
         if (pt.isAuthorized(player.getUniqueId())) {
-            sender.sendMessage("PPTenshi says: why are you trying to log in again?");
+            sender.sendMessage("§bPPTenshi says§r: why are you trying to log in again?");
             return true;
         }
 
@@ -37,7 +37,7 @@ public class CommandLogin implements CommandExecutor {
             pt.getLogger().info("Logging in player" + player.getDisplayName());
             pt.getLogger().info(hash);
             if (PasswordChecker.check(password, hash)) {
-                sender.sendMessage("PPTenshi says: welcome back, my homie");
+                sender.sendMessage("§bPPTenshi says§r: welcome back, my homie");
                 pt.setAuthorized(player.getUniqueId(), true);
 
                 // TODO: make this not such a quick fix
@@ -47,17 +47,17 @@ public class CommandLogin implements CommandExecutor {
 
                 return true;
             } else {
-                sender.sendMessage("PPTenshi says: that ain't the right password");
+                sender.sendMessage("§bPPTenshi says§r: that ain't the right password");
                 return false;
             }
         } catch (NullPointerException e) {
-            sender.sendMessage("PPTenshi says: register first pls");
+            sender.sendMessage("§bPPTenshi says§r: register first pls");
             return false;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        sender.sendMessage("PPTenshi says: fuxk fuck fuck fuck");
+        sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
         return false;
     }
 }

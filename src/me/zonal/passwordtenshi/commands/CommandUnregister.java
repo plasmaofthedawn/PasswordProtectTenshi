@@ -19,7 +19,7 @@ public class CommandUnregister implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("PPTenshi says: fuck off console user");
+            sender.sendMessage("§bPPTenshi says§r: fuck off console user");
             return false;
         }
 
@@ -27,14 +27,14 @@ public class CommandUnregister implements CommandExecutor {
 
         try {
             pt.removePasswordHash(player.getUniqueId());
-            sender.sendMessage("PPTenshi says: you have lost your registered abilities");
+            sender.sendMessage("§bPPTenshi says§r: you have lost your registered abilities");
             pt.setAuthorized(player.getUniqueId(), false);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        sender.sendMessage("PPTenshi says: fuxk fuck fuck fuck");
+        sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
         return true;
     }
 }

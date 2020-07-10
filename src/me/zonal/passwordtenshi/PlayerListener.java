@@ -44,7 +44,7 @@ public class PlayerListener implements Listener {
                 boolean authorized = this.pt.authentication_map.get(player.getUniqueId());
                 if (authorized) {
                     event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-                    event.setKickMessage("PPTenshi says: bruh you're already online");
+                    event.setKickMessage("§bPPTenshi says§r: bruh you're already online");
                     return;
                 }
             }
@@ -142,7 +142,7 @@ public class PlayerListener implements Listener {
             event.getPlayer().setGameMode(GameMode.SPECTATOR);
         }
 
-        event.getPlayer().sendMessage("PPTenshi says: login or register you baka");
+        event.getPlayer().sendMessage("§bPPTenshi says§r: login or register you baka");
 
         // TODO: Set user to fly mode....
         // TODO: Figure out what the hell this means....
