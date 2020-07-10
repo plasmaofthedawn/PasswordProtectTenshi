@@ -55,7 +55,7 @@ public class PasswordTenshi extends JavaPlugin {
         ArrayList<Byte> name = new ArrayList<>();
         ArrayList<Byte> hash = new ArrayList<>();
         for (byte b : bFile) {
-            if (b == (byte) '+') {
+            if (b == (byte) ']') {
                 if (!is_name) {
                     getLogger().info("key pair");
                     getLogger().info(new String(toByteArray(name)) + " " + new String(toByteArray(hash)));
@@ -79,9 +79,9 @@ public class PasswordTenshi extends JavaPlugin {
             FileWriter myWriter = new FileWriter("passwords.txt");
             for(Map.Entry<UUID, String> entry : password_map.entrySet()) {
                 myWriter.write(entry.getKey().toString());
-                myWriter.write("+");
+                myWriter.write("]");
                 myWriter.write(entry.getValue());
-                myWriter.write("+");
+                myWriter.write("]");
             }
             myWriter.close();
         } catch (IOException e) {
