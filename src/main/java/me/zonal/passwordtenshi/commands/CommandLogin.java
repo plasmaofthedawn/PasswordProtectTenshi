@@ -57,7 +57,7 @@ public class CommandLogin implements CommandExecutor {
             }
         } catch (NullPointerException e) {
             sender.sendMessage("§bPPTenshi says§r: register first pls");
-            return false;
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }

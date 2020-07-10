@@ -3,6 +3,7 @@ package me.zonal.passwordtenshi;
 import me.zonal.passwordtenshi.commands.CommandLogin;
 import me.zonal.passwordtenshi.commands.CommandRegister;
 import me.zonal.passwordtenshi.commands.CommandUnregister;
+import me.zonal.passwordtenshi.commands.CommandUnregisterPlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -33,6 +34,7 @@ public class PasswordTenshi extends JavaPlugin {
         this.getCommand("register").setExecutor(new CommandRegister(this));
         this.getCommand("unregister").setExecutor(new CommandUnregister(this));
         this.getCommand("login").setExecutor(new CommandLogin(this));
+        this.getCommand("resetplayer").setExecutor(new CommandUnregisterPlayer(this));
 
         getLogger().info("PPTenshi be here to protect your server <3");
     }
@@ -55,7 +57,7 @@ public class PasswordTenshi extends JavaPlugin {
 
         // fresh off the stack overflow printing press
         File file = new File("passwords.txt");
-        FileInputStream fileInputStream = null;
+        FileInputStream fileInputStream;
         byte[] bFile = new byte[(int) file.length()];
         try {
             //convert file into array of bytes
