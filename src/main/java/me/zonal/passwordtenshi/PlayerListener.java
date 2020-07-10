@@ -142,7 +142,11 @@ public class PlayerListener implements Listener {
             event.getPlayer().setGameMode(GameMode.SPECTATOR);
         }
 
-        event.getPlayer().sendMessage("§bPPTenshi says§r: login or register you baka");
+        if (pt.getPasswordHash(event.getPlayer().getUniqueId()) == null) {
+            event.getPlayer().sendMessage("§bPPTenshi says§r: register you baka~");
+        } else {
+            event.getPlayer().sendMessage("§bPPTenshi says§r: login you baka~");
+        }
 
         // TODO: Set user to fly mode....
         // TODO: Figure out what the hell this means....
