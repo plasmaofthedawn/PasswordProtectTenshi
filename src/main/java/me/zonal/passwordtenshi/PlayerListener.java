@@ -138,7 +138,7 @@ public class PlayerListener implements Listener {
         }
 
         // TODO: this is a quick fix
-        if (event.getPlayer().getLocation().getBlock().getType() == Material.NETHER_PORTAL) {
+        if (event.getPlayer().getLocation().getBlock().getType() == Material.NETHER_PORTAL && pt.getConfig().getBoolean("workaround.portal")) {
             event.getPlayer().setGameMode(GameMode.SPECTATOR);
         }
 
