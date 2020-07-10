@@ -22,6 +22,8 @@ public class PasswordTenshi extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        loadconfigfile();
         authentication_map = new ConcurrentHashMap<>();
         password_map = new ConcurrentHashMap<>();
         getPasswordMap();
@@ -34,6 +36,20 @@ public class PasswordTenshi extends JavaPlugin {
 
         getLogger().info("PPTenshi be here to protect your server <3");
     }
+
+    public void loadconfigfile() {
+
+        this.getConfig().addDefault("workaround.portal", true);
+        this.getConfig().addDefault("database.sql", false);
+        this.getConfig().addDefault("database.dbhost", "myhostdb");
+        this.getConfig().addDefault("database.dbport", "3306");
+        this.getConfig().addDefault("database.dbname", "mypasswordb");
+        this.getConfig().addDefault("database.dbuser", "mydbuser");
+        this.getConfig().addDefault("database.dbpass", "mydbpass");
+        this.getConfig().options().copyDefaults(true);
+        this.saveConfig();
+
+     }
 
     private void getPasswordMap() {
 
