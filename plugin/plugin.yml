@@ -14,3 +14,6 @@ commands:
   login:
     description: Login using your password into the game
     usage: /login <password>
+  resetplayer:
+    description: Admin only, removes a guy's password
+    usage: /resetplayer <player>

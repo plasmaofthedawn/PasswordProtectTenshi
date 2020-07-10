@@ -30,16 +30,11 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2942710-9970-4667-a803-3c9d5ed392be" name="Default Changelist" comment="cleaned up some command returns, as well as added error checking for arguments length">
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandUnregisterPlayer.java" afterDir="false" />
+    <list default="true" id="d2942710-9970-4667-a803-3c9d5ed392be" name="Default Changelist" comment="added an admin reset command command">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PasswordProtectTenshi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PasswordProtectTenshi.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/PasswordTenshi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/PasswordTenshi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandLogin.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594418273526</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added an admin reset command command">
+      <created>1594420870025</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1594420870025</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -159,7 +161,9 @@
     <MESSAGE value="fixed my ide somehow" />
     <MESSAGE value="test" />
     <MESSAGE value="cleaned up some command returns, as well as added error checking for arguments length" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up some command returns, as well as added error checking for arguments length" />
+    <MESSAGE value="added an unregister command" />
+    <MESSAGE value="added an admin reset command command" />
+    <option name="LAST_COMMIT_MESSAGE" value="added an admin reset command command" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1594413125809">
