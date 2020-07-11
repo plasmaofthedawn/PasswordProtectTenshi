@@ -82,7 +82,7 @@ public class MySQL {
 		return result;
 	}
 
-	public boolean addplayer(String playeruuid, String password){
+	public boolean addpass(String playeruuid, String password){
 		boolean result = false;
 		Connection con = null;
 		Statement st = null;
@@ -113,5 +113,83 @@ public class MySQL {
 			}
 		}
 		return result;
+	}
+
+	public boolean deletepass(String playeruuid){
+		boolean result = false;
+		Connection con = null;
+		Statement st = null;
+		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
+		final String delquery = "DELETE FROM users WHERE uuid = "+"'"+playeruuid+"'";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); 
+			con = DriverManager.getConnection(loginip, dbuser, dbpass); 
+			if(con != null){
+				st = con.createStatement();
+				st.executeUpdate(delquery);
+				result = true;
+			}
+			else{
+				result = false;
+			}
+		} catch(Exception ex){
+			ex.printStackTrace();
+		} finally {
+			if( con != null){
+				try{
+					con.close();
+				}
+				catch(SQLException ex){
+					ex.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
+
+	public String getpass(String playeruuid){
+		String retrievedpass = null;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
+		final String getquery = "SELECT password FROM users WHERE uuid = "+"'"+playeruuid+"'";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); 
+			con = DriverManager.getConnection(loginip, dbuser, dbpass);
+			st = con.createStatement();
+			rs = st.executeQuery(getquery);
+			retrievedpass = rs.getString("password");
+		} catch(Exception ex){
+			ex.printStackTrace();
+		} finally {
+			if( con != null){
+				try{
+					con.close();
+				}
+				catch(SQLException ex){
+					ex.printStackTrace();
+				}
+			}
+			if( st != null){
+				try{
+					st.close();
+				}
+				catch(SQLException ex){
+					ex.printStackTrace();
+				}
+			}
+			if( rs != null){
+				try{
+					rs.close();
+				}
+				catch(SQLException ex){
+					ex.printStackTrace();
+				}
+			}
+		}
+		return retrievedpass;
 	}
 } 
