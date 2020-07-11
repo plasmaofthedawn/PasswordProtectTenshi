@@ -61,7 +61,7 @@ public class MySQL {
 	public boolean addpass(String playeruuid, String password){
 		boolean result = false;
 		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
-		final String insertquery = "INSERT INTO users (uuid, password) VALUES ("+playeruuid+","+password+")";
+		final String insertquery = "INSERT INTO users (uuid, password) VALUES ('"+playeruuid+"', '"+password+"');";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
@@ -108,12 +108,12 @@ public class MySQL {
 			con = DriverManager.getConnection(loginip, dbuser, dbpass);
 			st = con.createStatement();
 
+			rs = st.executeQuery(getquery);
+
 			// if the user has not made a password yet
 			if (!rs.next()) {
 				return null;
 			}
-
-			rs = st.executeQuery(getquery);
 
 			retrievedpass = rs.getString("password");
 		} catch(Exception ex){
