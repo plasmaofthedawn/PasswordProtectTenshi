@@ -87,7 +87,7 @@ public class MySQL {
 		Connection con = null;
 		Statement st = null;
 		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
-		final String insertquery = "INSERT INTO users (uuid, password) VALUES ("+playerid+","+password+")";
+		final String insertquery = "INSERT INTO users (uuid, password) VALUES ("+playeruuid+","+password+")";
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
