@@ -15,20 +15,12 @@ public class MySQL {
 	ResultSet rs;
 	Statement st;
 
-	public MySQL (final String dbhost2) {
-		this.dbhost = dbhost2;
-	}
-	public void setdbport(final int dbport2) {
-		dbport = dbport2;
-	}
-	public void setdbname(final String dbname2) {
-		dbname = dbname2;
-	}
-	public void setdbuser(final String dbuser2) {
-		dbuser = dbuser2;
-	}
-	public void setdbpass(final String dbpass2) {
-		dbpass = dbpass2;
+	public MySQL (final String dbhost, final int dbport, final String dbname, final String dbuser, final String dbpass) {
+		this.dbhost = dbhost;
+		this.dbport = dbport;
+		this.dbname = dbname;
+		this.dbuser = dbuser;
+		this.dbpass = dbpass;
 	}
 
 	public boolean check() {
