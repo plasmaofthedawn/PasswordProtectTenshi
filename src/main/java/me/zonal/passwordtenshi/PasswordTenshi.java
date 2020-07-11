@@ -1,5 +1,6 @@
 package me.zonal.passwordtenshi;
 
+import me.zonal.passwordtenshi.MySQL;
 import me.zonal.passwordtenshi.commands.CommandLogin;
 import me.zonal.passwordtenshi.commands.CommandRegister;
 import me.zonal.passwordtenshi.commands.CommandUnregister;
@@ -22,11 +23,18 @@ public class PasswordTenshi extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
-        loadconfigfile();
         authentication_map = new ConcurrentHashMap<>();
         password_map = new ConcurrentHashMap<>();
         getPasswordMap();
+        loadconfigfile();
+        MySQL database = new MySQL(this.getConfig().getString("database.dbhost"));
+        database.setdbport(this.getConfig().getInt("database.dbport"));
+        database.setdbname(this.getConfig().getString("database.dbname"));
+        database.setdbuser(this.getConfig().getString("database.dbuser"));
+        database.setdbpass(this.getConfig().getString("database.dbpass"));
+        if (database.check()) {
+            getLogger().info("the database is working");
+        }
 
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 
@@ -42,7 +50,7 @@ public class PasswordTenshi extends JavaPlugin {
         this.getConfig().addDefault("workaround.portal", true);
         this.getConfig().addDefault("database.sql", false);
         this.getConfig().addDefault("database.dbhost", "myhostdb");
-        this.getConfig().addDefault("database.dbport", "3306");
+        this.getConfig().addDefault("database.dbport", 3306);
         this.getConfig().addDefault("database.dbname", "mypasswordb");
         this.getConfig().addDefault("database.dbuser", "mydbuser");
         this.getConfig().addDefault("database.dbpass", "mydbpass");
