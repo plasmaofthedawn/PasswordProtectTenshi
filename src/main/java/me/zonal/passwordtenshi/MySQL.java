@@ -79,9 +79,6 @@ public class MySQL {
 				st.executeUpdate(insertquery);
 				result = true;
 			}
-			else{
-				result = false;
-			}
 		} catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -101,9 +98,6 @@ public class MySQL {
 				st = con.createStatement();
 				st.executeUpdate(delquery);
 				result = true;
-			}
-			else{
-				result = false;
 			}
 		} catch(Exception ex){
 			ex.printStackTrace();
