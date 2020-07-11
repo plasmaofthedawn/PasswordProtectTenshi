@@ -30,10 +30,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2942710-9970-4667-a803-3c9d5ed392be" name="Default Changelist" comment="added async calls to the commands">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/MetaData.java" beforeDir="false" />
-    </list>
+    <list default="true" id="d2942710-9970-4667-a803-3c9d5ed392be" name="Default Changelist" comment="yeeted MetaData.java" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -156,7 +153,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594495560211</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="yeeted MetaData.java">
+      <created>1594502017510</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1594502017510</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -180,7 +184,8 @@
     <MESSAGE value="added resetplayer to plugin.yml" />
     <MESSAGE value="made login/register messages when not authenticated specific to registered or not" />
     <MESSAGE value="added async calls to the commands" />
-    <option name="LAST_COMMIT_MESSAGE" value="added async calls to the commands" />
+    <MESSAGE value="yeeted MetaData.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="yeeted MetaData.java" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1594413125809">
@@ -219,14 +224,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="350" y="189" key="SettingsEditor/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594418018006" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594495631642">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594502024340">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594495631642" />
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594423231060">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594502024340" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594502482229">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594423231060" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594502482229" />
     <state x="710" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1594492595464">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

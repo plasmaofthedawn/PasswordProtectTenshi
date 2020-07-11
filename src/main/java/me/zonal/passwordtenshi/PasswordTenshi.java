@@ -24,7 +24,7 @@ public class PasswordTenshi extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        loadconfigfile();
+        loadConfigFile();
         authentication_map = new ConcurrentHashMap<>();
         password_map = new ConcurrentHashMap<>();
         getPasswordMap();
@@ -39,7 +39,7 @@ public class PasswordTenshi extends JavaPlugin {
         getLogger().info("PPTenshi be here to protect your server <3");
     }
 
-    public void loadconfigfile() {
+    public void loadConfigFile() {
 
         this.getConfig().addDefault("workaround.portal", true);
         this.getConfig().addDefault("database.sql", false);
