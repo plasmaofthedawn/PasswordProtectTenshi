@@ -4,11 +4,16 @@ import java.sql.*;
 
 public class MySQL {
 
+	//db credentials
 	String dbhost;
 	int dbport;
 	String dbname;
 	String dbuser;
 	String dbpass;
+	//sql connections
+	Connection con;
+	ResultSet rs;
+	Statement st;
 
 	public MySQL (final String dbhost2) {
 		this.dbhost = dbhost2;
@@ -28,15 +33,11 @@ public class MySQL {
 
 	public boolean check() {
 		boolean result = false;
-		Connection con = null;
-		ResultSet rs = null;
-		Statement st = null;
 		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport);
 		final StringBuilder tablereq = new StringBuilder("CREATE TABLE IF NOT EXISTS users (");
 							tablereq.append("`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,");
 							tablereq.append("`uuid` VARCHAR(128) NOT NULL,");
 							tablereq.append("`password` VARCHAR(512) NOT NULL)");
-
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			con = DriverManager.getConnection(loginip, dbuser, dbpass); 
@@ -61,34 +62,16 @@ public class MySQL {
 		} catch(Exception ex){
 			ex.printStackTrace();
 			result = false;
-		} finally {
-			if( rs != null){
-				try{
-					rs.close();
-				}
-				catch(SQLException ex){
-					ex.printStackTrace();
-				}
-			}
-			if( con != null){
-				try{
-					con.close();
-				}
-				catch(SQLException ex){
-					ex.printStackTrace();
-				}
-			}
-		}
+		} 
+		closeSQL();
 		return result;
 	}
 
 	public boolean addpass(String playeruuid, String password){
 		boolean result = false;
-		Connection con = null;
-		Statement st = null;
 		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
 		final String insertquery = "INSERT INTO users (uuid, password) VALUES ("+playeruuid+","+password+")";
-
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			con = DriverManager.getConnection(loginip, dbuser, dbpass); 
@@ -102,23 +85,13 @@ public class MySQL {
 			}
 		} catch(Exception ex){
 			ex.printStackTrace();
-		} finally {
-			if( con != null){
-				try{
-					con.close();
-				}
-				catch(SQLException ex){
-					ex.printStackTrace();
-				}
-			}
 		}
+		closeSQL();
 		return result;
 	}
 
 	public boolean deletepass(String playeruuid){
 		boolean result = false;
-		Connection con = null;
-		Statement st = null;
 		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
 		final String delquery = "DELETE FROM users WHERE uuid = "+"'"+playeruuid+"'";
 
@@ -135,24 +108,13 @@ public class MySQL {
 			}
 		} catch(Exception ex){
 			ex.printStackTrace();
-		} finally {
-			if( con != null){
-				try{
-					con.close();
-				}
-				catch(SQLException ex){
-					ex.printStackTrace();
-				}
-			}
 		}
+		closeSQL();
 		return result;
 	}
 
 	public String getpass(String playeruuid){
 		String retrievedpass = null;
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
 		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
 		final String getquery = "SELECT password FROM users WHERE uuid = "+"'"+playeruuid+"'";
 
@@ -164,7 +126,13 @@ public class MySQL {
 			retrievedpass = rs.getString("password");
 		} catch(Exception ex){
 			ex.printStackTrace();
-		} finally {
+		}
+		closeSQL();
+		return retrievedpass;
+	}
+
+	private void closeSQL(){
+		try {
 			if( con != null){
 				try{
 					con.close();
@@ -189,7 +157,8 @@ public class MySQL {
 					ex.printStackTrace();
 				}
 			}
+		} catch (Exception ex){
+			ex.printStackTrace();
 		}
-		return retrievedpass;
 	}
 } 

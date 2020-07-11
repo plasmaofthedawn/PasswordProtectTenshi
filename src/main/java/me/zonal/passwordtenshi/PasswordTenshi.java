@@ -17,6 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PasswordTenshi extends JavaPlugin {
 
+    MySQL database;
+    Boolean useSQL = false;
     ConcurrentHashMap<UUID, Boolean> authentication_map;
     ConcurrentHashMap<UUID, String> password_map;
 
@@ -27,15 +29,16 @@ public class PasswordTenshi extends JavaPlugin {
         password_map = new ConcurrentHashMap<>();
         getPasswordMap();
         loadconfigfile();
-        MySQL database = new MySQL(this.getConfig().getString("database.dbhost"));
-        database.setdbport(this.getConfig().getInt("database.dbport"));
-        database.setdbname(this.getConfig().getString("database.dbname"));
-        database.setdbuser(this.getConfig().getString("database.dbuser"));
-        database.setdbpass(this.getConfig().getString("database.dbpass"));
-        if (database.check()) {
-            getLogger().info("the database is working");
+        if (this.getConfig().getBoolean("database.sql")) {
+            database = new MySQL(this.getConfig().getString("database.dbhost"));
+            database.setdbport(this.getConfig().getInt("database.dbport"));
+            database.setdbname(this.getConfig().getString("database.dbname"));
+            database.setdbuser(this.getConfig().getString("database.dbuser"));
+            database.setdbpass(this.getConfig().getString("database.dbpass"));
+            if (database.check()) {
+                useSQL = true;
+            }
         }
-
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 
         this.getCommand("register").setExecutor(new CommandRegister(this));
