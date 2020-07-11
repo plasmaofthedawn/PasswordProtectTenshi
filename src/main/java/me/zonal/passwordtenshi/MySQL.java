@@ -15,17 +15,19 @@ public class MySQL {
 	ResultSet rs;
 	Statement st;
 
+	final String loginip;
+
 	public MySQL (final String dbhost, final int dbport, final String dbname, final String dbuser, final String dbpass) {
 		this.dbhost = dbhost;
 		this.dbport = dbport;
 		this.dbname = dbname;
 		this.dbuser = dbuser;
 		this.dbpass = dbpass;
+		this.loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname + "?useSSL=false";
 	}
 
 	public boolean check() {
 		boolean result = false;
-		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport);
 		final StringBuilder tablereq = new StringBuilder("CREATE TABLE IF NOT EXISTS users (");
 							tablereq.append("`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,");
 							tablereq.append("`uuid` VARCHAR(128) NOT NULL,");
@@ -60,7 +62,6 @@ public class MySQL {
 
 	public boolean addpass(String playeruuid, String password){
 		boolean result = false;
-		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
 		final String insertquery = "INSERT INTO users (uuid, password) VALUES ('"+playeruuid+"', '"+password+"');";
 		
 		try {
@@ -80,7 +81,6 @@ public class MySQL {
 
 	public boolean deletepass(String playeruuid){
 		boolean result = false;
-		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
 		final String delquery = "DELETE FROM users WHERE uuid = "+"'"+playeruuid+"'";
 
 		try {
@@ -100,7 +100,6 @@ public class MySQL {
 
 	public String getpass(String playeruuid){
 		String retrievedpass = null;
-		final String loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname;
 		final String getquery = "SELECT password FROM users WHERE uuid = "+"'"+playeruuid+"'";
 
 		try {

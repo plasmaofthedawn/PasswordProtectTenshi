@@ -1,6 +1,5 @@
 package me.zonal.passwordtenshi.commands;
 
-import me.zonal.passwordtenshi.PasswordChecker;
 import me.zonal.passwordtenshi.PasswordTenshi;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -30,8 +29,11 @@ public class CommandUnregister implements CommandExecutor {
 
             try {
                 pt.removePasswordHash(player.getUniqueId());
-                sender.sendMessage("§bPPTenshi says§r: you have lost your registered abilities");
+                sender.sendMessage("§bPPTenshi says§r: you have lost your registered abiliillties");
                 pt.setAuthorized(player.getUniqueId(), false);
+
+                player.sendMessage("§bPPTenshi says§r: register again you baka~");
+
                 return;
             } catch (Exception e) {
                 e.printStackTrace();

@@ -1,6 +1,5 @@
 package me.zonal.passwordtenshi.commands;
 
-import me.zonal.passwordtenshi.PasswordChecker;
 import me.zonal.passwordtenshi.PasswordTenshi;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -48,6 +47,7 @@ public class CommandUnregisterPlayer implements CommandExecutor {
                 pt.removePasswordHash(player.getUniqueId());
                 sender.sendMessage("§bPPTenshi says§r: rip that dudes password :OkayuPray:");
                 player.sendMessage("§bPPTenshi says§r: your password privileges have been removed");
+                player.sendMessage("§bPPTenshi says§r: register again you baka~");
                 pt.setAuthorized(player.getUniqueId(), false);
                 return;
             } catch (Exception e) {

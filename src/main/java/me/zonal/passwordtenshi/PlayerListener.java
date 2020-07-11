@@ -67,6 +67,12 @@ public class PlayerListener implements Listener {
         // start the session for the player
         this.pt.authentication_map.put(player.getUniqueId(), false);
 
+        if (pt.getPasswordHash(event.getPlayer().getUniqueId()) == null) {
+            event.getPlayer().sendMessage("§bPPTenshi says§r: register you baka~");
+        } else {
+            event.getPlayer().sendMessage("§bPPTenshi says§r: login you baka~");
+        }
+
         // final LoginSecurityConfig config = LoginSecurity.getConfiguration();
     }
 
@@ -140,12 +146,6 @@ public class PlayerListener implements Listener {
         // TODO: this is a quick fix
         if (event.getPlayer().getLocation().getBlock().getType() == Material.NETHER_PORTAL && pt.getConfig().getBoolean("workaround.portal")) {
             event.getPlayer().setGameMode(GameMode.SPECTATOR);
-        }
-
-        if (pt.getPasswordHash(event.getPlayer().getUniqueId()) == null) {
-            event.getPlayer().sendMessage("§bPPTenshi says§r: register you baka~");
-        } else {
-            event.getPlayer().sendMessage("§bPPTenshi says§r: login you baka~");
         }
 
         // TODO: Set user to fly mode....
