@@ -1,6 +1,6 @@
 package me.zonal.passwordtenshi;
 
-import java.sql.*; 
+import java.sql.*;
 
 public class MySQL {
 
@@ -107,7 +107,14 @@ public class MySQL {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			con = DriverManager.getConnection(loginip, dbuser, dbpass);
 			st = con.createStatement();
+
+			// if the user has not made a password yet
+			if (!rs.next()) {
+				return null;
+			}
+
 			rs = st.executeQuery(getquery);
+
 			retrievedpass = rs.getString("password");
 		} catch(Exception ex){
 			ex.printStackTrace();

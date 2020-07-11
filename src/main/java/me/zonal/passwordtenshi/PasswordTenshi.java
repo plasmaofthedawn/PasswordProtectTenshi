@@ -7,12 +7,6 @@ import me.zonal.passwordtenshi.commands.CommandUnregisterPlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,6 +31,8 @@ public class PasswordTenshi extends JavaPlugin {
                 (int) config.get("database.dbport"),
                 (String) config.get("database.dbname"), (String) config.get("database.dbuser"),
                 (String) config.get("database.dbpass"));
+
+        database.check();
 
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 
