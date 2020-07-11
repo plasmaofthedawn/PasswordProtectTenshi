@@ -35,24 +35,27 @@ public class CommandUnregisterPlayer implements CommandExecutor {
              return false;
          }
 
-         Player player = Bukkit.getPlayer(args[0]);
+        Bukkit.getScheduler().runTaskAsynchronously(pt, () -> {
 
-         if (player == null) {
-             sender.sendMessage("§bPPTenshi says§r: couldn't find that player online >.<");
-             return true;
-         }
+            Player player = Bukkit.getPlayer(args[0]);
 
-        try {
-            pt.removePasswordHash(player.getUniqueId());
-            sender.sendMessage("§bPPTenshi says§r: rip that dudes password :OkayuPray:");
-            player.sendMessage("§bPPTenshi says§r: your password privileges have been removed");
-            pt.setAuthorized(player.getUniqueId(), false);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            if (player == null) {
+                sender.sendMessage("§bPPTenshi says§r: couldn't find that player online >.<");
+                return;
+            }
 
-        sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
-        return true;
+            try {
+                pt.removePasswordHash(player.getUniqueId());
+                sender.sendMessage("§bPPTenshi says§r: rip that dudes password :OkayuPray:");
+                player.sendMessage("§bPPTenshi says§r: your password privileges have been removed");
+                pt.setAuthorized(player.getUniqueId(), false);
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
+        });
+        return false;
     }
 }

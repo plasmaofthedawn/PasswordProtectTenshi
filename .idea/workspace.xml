@@ -24,17 +24,18 @@
     <select>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:zonal" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2942710-9970-4667-a803-3c9d5ed392be" name="Default Changelist" comment="added resetplayer to plugin.yml">
+    <list default="true" id="d2942710-9970-4667-a803-3c9d5ed392be" name="Default Changelist" comment="made login/register messages when not authenticated specific to registered or not">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/PlayerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/PlayerListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandUnregister.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandUnregister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandUnregisterPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/zonal/passwordtenshi/commands/CommandUnregisterPlayer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,10 +69,17 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="zonal" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/ChameleonIVCR/PasswordProtectTenshi.git" />
+      </set>
+    </option>
   </component>
   <component name="ProjectId" id="1eVgR3MfeyktK9odY6Wuo9bCvCx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -137,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594421229619</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="made login/register messages when not authenticated specific to registered or not">
+      <created>1594422340303</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1594422340303</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -145,19 +160,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="zonal" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -171,17 +174,18 @@
     <MESSAGE value="added an unregister command" />
     <MESSAGE value="added an admin reset command command" />
     <MESSAGE value="added resetplayer to plugin.yml" />
-    <option name="LAST_COMMIT_MESSAGE" value="added resetplayer to plugin.yml" />
+    <MESSAGE value="made login/register messages when not authenticated specific to registered or not" />
+    <option name="LAST_COMMIT_MESSAGE" value="made login/register messages when not authenticated specific to registered or not" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1594413125809">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="94" key="#Project_Structure/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594413125809" />
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594417712315">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594492533783">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594417712315" />
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594492533783" />
     <state x="600" y="405" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1594417432673">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -210,14 +214,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="350" y="189" key="SettingsEditor/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594418018006" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594421765614">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594423028764">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594421765614" />
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594417123743">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594423028764" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594423231060">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594417123743" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594423231060" />
+    <state x="710" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1594492595464">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="710" y="421" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040/-1680.32.1680.1010@0.0.1920.1040" timestamp="1594492595464" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1594416566747">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
