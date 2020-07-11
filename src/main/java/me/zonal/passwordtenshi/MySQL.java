@@ -42,22 +42,21 @@ public class MySQL {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			con = DriverManager.getConnection(loginip, dbuser, dbpass); 
 
-			if(con != null){
+			if(con != null) {
 				rs = con.getMetaData().getCatalogs();
-				while(rs.next()){
+				while (rs.next()) {
 					String catalogs = rs.getString(1);
-					if(dbname.equals(catalogs)){
+					if (dbname.equals(catalogs)) {
 						result = true;
 					}
 				}
-			} else{
-				result = false;
+
+				con.close();
+				con = DriverManager.getConnection(loginip + "/" + dbname, dbuser, dbpass);
+				st = con.createStatement();
+				st.executeUpdate(tablereq.toString());
+
 			}
-			
-			con.close();
-			con = DriverManager.getConnection(loginip+"/"+dbname, dbuser, dbpass); 
-			st = con.createStatement();
-			st.executeUpdate(tablereq.toString());
 
 		} catch(Exception ex){
 			ex.printStackTrace();
