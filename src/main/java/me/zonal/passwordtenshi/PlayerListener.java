@@ -20,19 +20,17 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
 
 import java.util.ArrayList;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerListener implements Listener {
 
-    PasswordTenshi pt;
+    final PasswordTenshi pt;
     private final ArrayList<String> ALLOWED_COMMANDS;
 
     public PlayerListener(PasswordTenshi pt){
         this.pt = pt;
 
         // kinda stupid but it should work
-        ALLOWED_COMMANDS = new ArrayList<String>();
+        ALLOWED_COMMANDS = new ArrayList<>();
         ALLOWED_COMMANDS.add("/login ");
         ALLOWED_COMMANDS.add("/register ");
     }
@@ -135,6 +133,7 @@ public class PlayerListener implements Listener {
         // Prevent moving
         final Location from = event.getFrom();
         final Location to = event.getTo();
+        assert to != null;
         if(from.getBlockX() != to.getBlockX() || from.getBlockY() != to.getBlockY() || from.getBlockZ() != to.getBlockZ()) {
             event.setTo(event.getFrom());
         }

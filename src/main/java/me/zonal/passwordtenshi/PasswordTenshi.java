@@ -9,9 +9,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings("ALL")
 public class PasswordTenshi extends JavaPlugin {
 
     ConcurrentHashMap<UUID, Boolean> authentication_map;
@@ -33,7 +35,7 @@ public class PasswordTenshi extends JavaPlugin {
         FileConfiguration config = this.getConfig();
 
         database = new MySQL((String) config.get("database.dbhost"),
-                (int) config.get("database.dbport"),
+                (int) Objects.requireNonNull(config.get("database.dbport")),
                 (String) config.get("database.dbname"), (String) config.get("database.dbuser"),
                 (String) config.get("database.dbpass"));
 
@@ -41,10 +43,11 @@ public class PasswordTenshi extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 
-        this.getCommand("register").setExecutor(new CommandRegister(this));
-        this.getCommand("unregister").setExecutor(new CommandUnregister(this));
-        this.getCommand("login").setExecutor(new CommandLogin(this));
-        this.getCommand("resetplayer").setExecutor(new CommandUnregisterPlayer(this));
+        // mess of a thing but hey my IDE is happy now
+        Objects.requireNonNull(this.getCommand("register")).setExecutor(new CommandRegister(this));
+        Objects.requireNonNull(this.getCommand("unregister")).setExecutor(new CommandUnregister(this));
+        Objects.requireNonNull(this.getCommand("login")).setExecutor(new CommandLogin(this));
+        Objects.requireNonNull(this.getCommand("resetplayer")).setExecutor(new CommandUnregisterPlayer(this));
 
         getLogger().info("PPTenshi be here to protect your server <3");
     }

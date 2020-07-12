@@ -5,11 +5,11 @@ import java.sql.*;
 public class MySQL {
 
 	//db credentials
-	String dbhost;
-	int dbport;
-	String dbname;
-	String dbuser;
-	String dbpass;
+	final String dbhost;
+	final int dbport;
+	final String dbname;
+	final String dbuser;
+	final String dbpass;
 	//sql connections
 	Connection con;
 	ResultSet rs;
@@ -23,9 +23,10 @@ public class MySQL {
 		this.dbname = dbname;
 		this.dbuser = dbuser;
 		this.dbpass = dbpass;
-		this.loginip = "jdbc:mysql://"+dbhost+":"+String.valueOf(dbport)+"/"+dbname + "?useSSL=false";
+		this.loginip = "jdbc:mysql://" + dbhost + ":" + dbport + "/" + dbname + "?useSSL=false";
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	public boolean check() {
 		boolean result = false;
 		final StringBuilder tablereq = new StringBuilder("CREATE TABLE IF NOT EXISTS users (");
@@ -35,7 +36,7 @@ public class MySQL {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
-			con = DriverManager.getConnection("jdbc:mysql://"+dbhost+":"+String.valueOf(dbport), dbuser, dbpass); 
+			con = DriverManager.getConnection("jdbc:mysql://" + dbhost + ":"+ dbport, dbuser, dbpass);
 			rs = con.getMetaData().getCatalogs();
 			while (rs.next()) {
 				String catalogs = rs.getString(1);
@@ -51,9 +52,12 @@ public class MySQL {
 			ex.printStackTrace();
 			result = false;
 		}
+
 		return result;
+
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	public boolean addpass(String playeruuid, String password){
 		boolean result = false;
 		final String insertquery = "INSERT INTO users (uuid, password) VALUES ('"+playeruuid+"', '"+password+"');";
@@ -73,6 +77,7 @@ public class MySQL {
 		return result;
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	public boolean deletepass(String playeruuid){
 		boolean result = false;
 		final String delquery = "DELETE FROM users WHERE uuid = "+"'"+playeruuid+"'";

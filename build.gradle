@@ -5,6 +5,7 @@ group = 'me.zonal'
 version = '1.3.2'
 archivesBaseName = 'passwordtenshi'
 
+//noinspection GroovyUnusedAssignment
 def spigotVersion = '1.16.1-R0.1-SNAPSHOT'
 
 repositories {
