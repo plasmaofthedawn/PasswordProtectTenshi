@@ -32,7 +32,7 @@ public class CommandUnregister implements CommandExecutor {
                 sender.sendMessage("§bPPTenshi says§r: you have lost your registered abiliillties");
                 pt.setAuthorized(player.getUniqueId(), false);
 
-                player.sendMessage("§bPPTenshi says§r: register again you baka~");
+                player.sendMessage("§bPPTenshi says§r: register (/register <password>) again you baka~");
 
                 return;
             } catch (Exception e) {

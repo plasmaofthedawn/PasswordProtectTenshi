@@ -44,7 +44,7 @@ public class MySQL {
 				}
 			}
 			con.close();
-			con = DriverManager.getConnection(loginip + "/" + dbname, dbuser, dbpass);
+			con = DriverManager.getConnection(loginip, dbuser, dbpass);
 			st = con.createStatement();
 			st.executeUpdate(tablereq.toString());
 		} catch(Exception ex){

@@ -37,7 +37,7 @@ public class CommandRegister implements CommandExecutor {
 
 
             if (pt.getPasswordHash(player.getUniqueId()) != null) {
-                sender.sendMessage("§bPPTenshi says§r: you already have a password");
+                sender.sendMessage("§bPPTenshi says§r: you already have a password, use /login");
                 return;
             }
 
