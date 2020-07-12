@@ -27,7 +27,6 @@ public class PlayerListener implements Listener {
 
     PasswordTenshi pt;
     private final ArrayList<String> ALLOWED_COMMANDS;
-    ConcurrentHashMap<UUID, Integer> repeat_task_id;
 
     public PlayerListener(PasswordTenshi pt){
         this.pt = pt;
@@ -36,7 +35,6 @@ public class PlayerListener implements Listener {
         ALLOWED_COMMANDS = new ArrayList<String>();
         ALLOWED_COMMANDS.add("/login ");
         ALLOWED_COMMANDS.add("/register ");
-        repeat_task_id = new ConcurrentHashMap<>();
     }
 
     @EventHandler
@@ -70,9 +68,6 @@ public class PlayerListener implements Listener {
 
         // start the session for the player
         this.pt.authentication_map.put(player.getUniqueId(), false);
-
-
-        send_login_register_message(event.getPlayer());
 
         // final LoginSecurityConfig config = LoginSecurity.getConfiguration();
     }
@@ -210,31 +205,4 @@ public class PlayerListener implements Listener {
         return player.hasMetadata("NPC") || !player.isOnline();
     }
 
-    private void send_login_register_message(Player player) {
-
-        boolean registered = pt.getPasswordHash(player.getUniqueId()) != null;
-
-        if (!registered) {
-            player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
-        } else {
-            player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
-        }
-
-        int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(pt, () -> {
-
-            if (!pt.isAuthorized(player.getUniqueId())) {
-                if (!registered) {
-                    player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
-                } else {
-                    player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
-                }
-            } else {
-                Bukkit.getScheduler().cancelTask(this.repeat_task_id.get(player.getUniqueId()));
-                repeat_task_id.remove(player.getUniqueId());
-            }
-        }, 0L, 100L);
-
-        repeat_task_id.put(player.getUniqueId(), id);
-
-    }
 }

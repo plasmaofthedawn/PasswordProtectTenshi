@@ -34,6 +34,8 @@ public class CommandUnregister implements CommandExecutor {
 
                 player.sendMessage("§bPPTenshi says§r: register (/register <password>) again you baka~");
 
+                pt.sendRegisterLoginSpam(player);
+
                 return;
             } catch (Exception e) {
                 e.printStackTrace();

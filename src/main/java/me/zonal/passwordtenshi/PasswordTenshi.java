@@ -4,7 +4,9 @@ import me.zonal.passwordtenshi.commands.CommandLogin;
 import me.zonal.passwordtenshi.commands.CommandRegister;
 import me.zonal.passwordtenshi.commands.CommandUnregister;
 import me.zonal.passwordtenshi.commands.CommandUnregisterPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;
@@ -15,6 +17,8 @@ public class PasswordTenshi extends JavaPlugin {
     ConcurrentHashMap<UUID, Boolean> authentication_map;
     MySQL database;
 
+    ConcurrentHashMap<UUID, Integer> repeat_task_id;
+
     // ConcurrentHashMap<UUID, String> password_map;
     // :OkayuPray: for password_map
 
@@ -24,6 +28,7 @@ public class PasswordTenshi extends JavaPlugin {
 
         loadConfigFile();
         authentication_map = new ConcurrentHashMap<>();
+        repeat_task_id = new ConcurrentHashMap<>();
 
         FileConfiguration config = this.getConfig();
 
@@ -83,5 +88,33 @@ public class PasswordTenshi extends JavaPlugin {
 
     public void removePasswordHash(UUID uuid) {
         database.deletepass(uuid.toString());
+    }
+
+    public void sendRegisterLoginSpam(Player player) {
+
+        boolean registered = getPasswordHash(player.getUniqueId()) != null;
+
+        if (!registered) {
+            player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
+        } else {
+            player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
+        }
+
+        int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+
+            if (!isAuthorized(player.getUniqueId())) {
+                if (!registered) {
+                    player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
+                } else {
+                    player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
+                }
+            } else {
+                Bukkit.getScheduler().cancelTask(repeat_task_id.get(player.getUniqueId()));
+                repeat_task_id.remove(player.getUniqueId());
+            }
+        }, 0L, 100L);
+
+        repeat_task_id.put(player.getUniqueId(), id);
+
     }
 }
