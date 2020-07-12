@@ -32,44 +32,38 @@ public class MySQL {
 							tablereq.append("`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,");
 							tablereq.append("`uuid` VARCHAR(128) NOT NULL,");
 							tablereq.append("`password` VARCHAR(512) NOT NULL)");
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
-			con = DriverManager.getConnection(loginip, dbuser, dbpass); 
-
-			if(con != null) {
-				rs = con.getMetaData().getCatalogs();
-				while (rs.next()) {
-					String catalogs = rs.getString(1);
-					if (dbname.equals(catalogs)) {
-						result = true;
-					}
+			con = DriverManager.getConnection("jdbc:mysql://"+dbhost+":"+String.valueOf(dbport), dbuser, dbpass); 
+			rs = con.getMetaData().getCatalogs();
+			while (rs.next()) {
+				String catalogs = rs.getString(1);
+				if (dbname.equals(catalogs)) {
+					result = true;
 				}
-
-				con.close();
-				con = DriverManager.getConnection(loginip + "/" + dbname, dbuser, dbpass);
-				st = con.createStatement();
-				st.executeUpdate(tablereq.toString());
-
 			}
-
+			con.close();
+			con = DriverManager.getConnection(loginip + "/" + dbname, dbuser, dbpass);
+			st = con.createStatement();
+			st.executeUpdate(tablereq.toString());
 		} catch(Exception ex){
 			ex.printStackTrace();
 			result = false;
-		} 
-		closeSQL();
+		}
 		return result;
 	}
 
 	public boolean addpass(String playeruuid, String password){
 		boolean result = false;
 		final String insertquery = "INSERT INTO users (uuid, password) VALUES ('"+playeruuid+"', '"+password+"');";
-		
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			con = DriverManager.getConnection(loginip, dbuser, dbpass); 
-			if(con != null){
-				st = con.createStatement();
-				st.executeUpdate(insertquery);
+			st = con.createStatement();
+			int response = st.executeUpdate(insertquery);
+			if (response > 0){
 				result = true;
 			}
 		} catch(Exception ex){
@@ -86,9 +80,9 @@ public class MySQL {
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			con = DriverManager.getConnection(loginip, dbuser, dbpass); 
-			if(con != null){
-				st = con.createStatement();
-				st.executeUpdate(delquery);
+			st = con.createStatement();
+			int response = st.executeUpdate(delquery);
+			if (response > 0){
 				result = true;
 			}
 		} catch(Exception ex){
@@ -106,14 +100,11 @@ public class MySQL {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			con = DriverManager.getConnection(loginip, dbuser, dbpass);
 			st = con.createStatement();
-
 			rs = st.executeQuery(getquery);
-
 			// if the user has not made a password yet
 			if (!rs.next()) {
 				return null;
 			}
-
 			retrievedpass = rs.getString("password");
 		} catch(Exception ex){
 			ex.printStackTrace();
