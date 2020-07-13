@@ -203,5 +203,4 @@ public class PlayerListener implements Listener {
         final Player player = (Player) human;
         return player.hasMetadata("NPC") || !player.isOnline();
     }
-
 }

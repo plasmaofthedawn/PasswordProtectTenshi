@@ -4,9 +4,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Base64;
 
-@SuppressWarnings("ALL")
 public class PasswordChecker {
     // The higher the number of iterations the more
     // expensive computing the hash is for us and
