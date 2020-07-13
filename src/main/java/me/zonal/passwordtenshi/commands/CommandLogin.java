@@ -42,7 +42,7 @@ public class CommandLogin implements CommandExecutor {
 
             try {
                 String hash = pt.getPasswordHash(player.getUniqueId());
-                pt.getLogger().info("Logging in player" + player.getDisplayName());
+                pt.getLogger().info("Logging in player " + player.getDisplayName());
                 pt.getLogger().info(hash);
                 if (PasswordChecker.check(password, hash)) {
                     sender.sendMessage("§bPPTenshi says§r: welcome back, my homie");

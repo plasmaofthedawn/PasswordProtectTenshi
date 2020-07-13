@@ -6,6 +6,7 @@ import me.zonal.passwordtenshi.commands.CommandLogin;
 import me.zonal.passwordtenshi.commands.CommandRegister;
 import me.zonal.passwordtenshi.commands.CommandUnregister;
 import me.zonal.passwordtenshi.commands.CommandUnregisterPlayer;
+import org.apache.logging.log4j.LogManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -73,7 +74,8 @@ public class PasswordTenshi extends JavaPlugin {
                 getLogger().info("PPTenshi has successfully established a connection with your H2 local database and will now use it to store credentials.");
             }
         }
-
+        org.apache.logging.log4j.core.Logger consoleLogger = (org.apache.logging.log4j.core.Logger) LogManager.getRootLogger();
+        consoleLogger.addFilter(new LogFilter());
         getLogger().info("PPTenshi be here to protect your server <3");
     }
 
