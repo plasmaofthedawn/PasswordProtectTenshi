@@ -135,6 +135,8 @@ public class PasswordTenshi extends JavaPlugin {
             player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
         }
 
+        final int[] times = {0};
+
         int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 
             if (player.isOnline() && !isAuthorized(uuid)) {
@@ -147,6 +149,13 @@ public class PasswordTenshi extends JavaPlugin {
                 Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid));
                 repeat_task_id.remove(uuid);
             }
+
+            times[0]++;
+
+            if (times[0] > 12) {
+                player.kickPlayer("§bPPTenshi says§r: you've been logged out for too long");
+            }
+
         }, 0L, 200L);
 
         repeat_task_id.put(uuid, id);
