@@ -1,7 +1,7 @@
 package me.zonal.passwordtenshi.commands;
 
-import me.zonal.passwordtenshi.PasswordChecker;
 import me.zonal.passwordtenshi.PasswordTenshi;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,18 +23,26 @@ public class CommandUnregister implements CommandExecutor {
             return true;
         }
 
-        Player player = (Player) sender;
+        Bukkit.getScheduler().runTaskAsynchronously(pt, () -> {
 
-        try {
-            pt.removePasswordHash(player.getUniqueId());
-            sender.sendMessage("§bPPTenshi says§r: you have lost your registered abilities");
-            pt.setAuthorized(player.getUniqueId(), false);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            Player player = (Player) sender;
 
-        sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
+            try {
+                pt.removePasswordHash(player.getUniqueId());
+                sender.sendMessage("§bPPTenshi says§r: you have lost your registered abilities");
+                pt.setAuthorized(player.getUniqueId(), false);
+
+                player.sendMessage("§bPPTenshi says§r: register (/register <password>) again you baka~");
+
+                pt.sendRegisterLoginSpam(player);
+
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            sender.sendMessage("§bPPTenshi says§r: fuck fuck fuck fuck");
+        });
         return true;
     }
 }
