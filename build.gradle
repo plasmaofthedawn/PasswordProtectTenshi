@@ -38,6 +38,7 @@ dependencies {
 
     compile 'com.h2database:h2:1.4.197'
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
 }
 
 sourceSets {
