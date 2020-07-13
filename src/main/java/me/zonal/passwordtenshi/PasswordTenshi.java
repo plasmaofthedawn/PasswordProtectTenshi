@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PasswordTenshi extends JavaPlugin {
 
     ConcurrentHashMap<UUID, Boolean> authentication_map;
+    ConcurrentHashMap<UUID, Integer> repeat_task_id;
     Database database;
 
     // ConcurrentHashMap<UUID, String> password_map;
@@ -38,11 +39,11 @@ public class PasswordTenshi extends JavaPlugin {
         this.getCommand("resetplayer").setExecutor(new CommandUnregisterPlayer(this));
 
         if (config.getBoolean("database.mysql.enable")){
-            database = new MySQLdb((String) config.get("database.mysql.dbhost"),
+            database = new MySQLdb((String) config.getString("database.mysql.dbhost"),
                     (int) config.get("database.mysql.dbport"),
-                    (String) config.get("database.mysql.dbname"), 
-                    (String) config.get("database.dbuser"),
-                    (String) config.get("database.mysql.dbpass"));
+                    (String) config.getString("database.mysql.dbname"), 
+                    (String) config.getString("database.dbuser"),
+                    (String) config.getString("database.mysql.dbpass"));
 
             if (!database.check()){
                 config.set("database.mysql.enable", false);
@@ -57,9 +58,9 @@ public class PasswordTenshi extends JavaPlugin {
             Path path = Paths.get(getDataFolder().getAbsolutePath(), config.getString("database.h2.dbname"));
             database = new H2db((String) path.toString(),
                     (int) config.get("database.mysql.dbport"),
-                    (String) config.get("database.h2.dbname"), 
-                    (String) config.get("database.h2.dbuser"),
-                    (String) config.get("database.h2.dbpass"));
+                    (String) config.getString("database.h2.dbname"), 
+                    (String) config.getString("database.h2.dbuser"),
+                    (String) config.getString("database.h2.dbpass"));
 
             if (!database.check()){
                 getLogger().info("PPTenshi has encountered an error when writing and/or reading the H2 local database");
@@ -115,5 +116,33 @@ public class PasswordTenshi extends JavaPlugin {
 
     public void removePasswordHash(UUID uuid) {
         database.deletePass(uuid.toString());
+    }
+    
+    public void sendRegisterLoginSpam(Player player) {
+
+        boolean registered = getPasswordHash(player.getUniqueId()) != null;
+
+        if (!registered) {
+            player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
+        } else {
+            player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
+        }
+
+        int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+
+            if (!isAuthorized(player.getUniqueId())) {
+                if (!registered) {
+                    player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
+                } else {
+                    player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
+                }
+            } else {
+                Bukkit.getScheduler().cancelTask(repeat_task_id.get(player.getUniqueId()));
+                repeat_task_id.remove(player.getUniqueId());
+            }
+        }, 0L, 100L);
+
+        repeat_task_id.put(player.getUniqueId(), id);
+
     }
 }

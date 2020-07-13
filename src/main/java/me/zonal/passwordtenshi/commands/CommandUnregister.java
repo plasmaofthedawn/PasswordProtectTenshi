@@ -29,17 +29,19 @@ public class CommandUnregister implements CommandExecutor {
 
             try {
                 pt.removePasswordHash(player.getUniqueId());
-                sender.sendMessage("§bPPTenshi says§r: you have lost your registered abiliillties");
+                sender.sendMessage("§bPPTenshi says§r: you have lost your registered abilities");
                 pt.setAuthorized(player.getUniqueId(), false);
 
-                player.sendMessage("§bPPTenshi says§r: register again you baka~");
+                player.sendMessage("§bPPTenshi says§r: register (/register <password>) again you baka~");
+
+                pt.sendRegisterLoginSpam(player);
 
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
+            sender.sendMessage("§bPPTenshi says§r: fuck fuck fuck fuck");
         });
         return true;
     }

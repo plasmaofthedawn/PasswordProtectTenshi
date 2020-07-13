@@ -65,7 +65,7 @@ public class CommandLogin implements CommandExecutor {
                 e.printStackTrace();
             }
 
-            sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
+            sender.sendMessage("§bPPTenshi says§r: fuck fuck fuck fuck");
 
         });
         return true;

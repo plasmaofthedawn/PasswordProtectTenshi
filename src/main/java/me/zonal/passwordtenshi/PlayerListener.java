@@ -23,14 +23,14 @@ import java.util.ArrayList;
 
 public class PlayerListener implements Listener {
 
-    PasswordTenshi pt;
+    final PasswordTenshi pt;
     private final ArrayList<String> ALLOWED_COMMANDS;
 
     public PlayerListener(PasswordTenshi pt){
         this.pt = pt;
 
         // kinda stupid but it should work
-        ALLOWED_COMMANDS = new ArrayList<String>();
+        ALLOWED_COMMANDS = new ArrayList<>();
         ALLOWED_COMMANDS.add("/login ");
         ALLOWED_COMMANDS.add("/register ");
     }
@@ -66,12 +66,6 @@ public class PlayerListener implements Listener {
 
         // start the session for the player
         this.pt.authentication_map.put(player.getUniqueId(), false);
-
-        if (pt.getPasswordHash(event.getPlayer().getUniqueId()) == null) {
-            event.getPlayer().sendMessage("§bPPTenshi says§r: register you baka~");
-        } else {
-            event.getPlayer().sendMessage("§bPPTenshi says§r: login you baka~");
-        }
 
         // final LoginSecurityConfig config = LoginSecurity.getConfiguration();
     }
@@ -139,6 +133,7 @@ public class PlayerListener implements Listener {
         // Prevent moving
         final Location from = event.getFrom();
         final Location to = event.getTo();
+        assert to != null;
         if(from.getBlockX() != to.getBlockX() || from.getBlockY() != to.getBlockY() || from.getBlockZ() != to.getBlockZ()) {
             event.setTo(event.getFrom());
         }

@@ -47,14 +47,16 @@ public class CommandUnregisterPlayer implements CommandExecutor {
                 pt.removePasswordHash(player.getUniqueId());
                 sender.sendMessage("§bPPTenshi says§r: rip that dudes password :OkayuPray:");
                 player.sendMessage("§bPPTenshi says§r: your password privileges have been removed");
-                player.sendMessage("§bPPTenshi says§r: register again you baka~");
+                player.sendMessage("§bPPTenshi says§r: register (/register <password>) again you baka~");
                 pt.setAuthorized(player.getUniqueId(), false);
+
+                pt.sendRegisterLoginSpam(player);
+
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            sender.sendMessage("§bPPTenshi says§r: fuxk fuck fuck fuck");
+            sender.sendMessage("§bPPTenshi says§r: fuck fuck fuck fuck");
         });
         return false;
     }
