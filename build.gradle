@@ -21,7 +21,7 @@ plugins {
 allprojects {
     plugins.withType(JavaPlugin) {
         group = 'me.zonal'
-        version = '1.4.2'
+        version = '1.4.3'
 
         repositories {
             mavenCentral()
@@ -38,6 +38,9 @@ dependencies {
 
     compile 'com.h2database:h2:1.4.197'
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
+
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
 }
 
 sourceSets {
