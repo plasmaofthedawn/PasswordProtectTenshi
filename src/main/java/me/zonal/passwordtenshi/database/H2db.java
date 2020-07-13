@@ -26,6 +26,7 @@ public class H2db implements Database{
             connection = credentials.getConnection();
             statement = connection.createStatement();
             statement.executeUpdate(tablereq.toString());
+            result = true;
         } catch(Exception ex){
             ex.printStackTrace();
             result = false;
