@@ -67,6 +67,8 @@ public class PlayerListener implements Listener {
         // start the session for the player
         this.pt.authentication_map.put(player.getUniqueId(), false);
 
+        pt.sendRegisterLoginSpam(player);
+
         // final LoginSecurityConfig config = LoginSecurity.getConfiguration();
     }
 
