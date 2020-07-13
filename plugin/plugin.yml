@@ -1,6 +1,6 @@
 name: PasswordProtectTenshi
 version: 1.4.2
-author: zonal and stolen code
+author: zonal, chame, and stolen code
 main: me.zonal.passwordtenshi.PasswordTenshi
 api-version: 1.16
 
