@@ -44,7 +44,7 @@ public class PasswordTenshi extends JavaPlugin {
 
         if (config.getBoolean("database.mysql.enable")){
             database = new MySQLdb(config.getString("database.mysql.dbhost"),
-                    (int) config.get("database.mysql.dbport"),
+                    config.getInt("database.mysql.dbport"),
                     config.getString("database.mysql.dbname"),
                     config.getString("database.dbuser"),
                     config.getString("database.mysql.dbpass"));
@@ -60,11 +60,11 @@ public class PasswordTenshi extends JavaPlugin {
         
         if (!config.getBoolean("database.mysql.enable")){
             Path path = Paths.get(getDataFolder().getAbsolutePath(), config.getString("database.h2.dbname"));
-            database = new H2db((String) path.toString(),
-                    (int) config.get("database.mysql.dbport"),
-                    (String) config.getString("database.h2.dbname"), 
-                    (String) config.getString("database.h2.dbuser"),
-                    (String) config.getString("database.h2.dbpass"));
+            database = new H2db(path.toString(),
+                    config.getInt("database.mysql.dbport"),
+                    config.getString("database.h2.dbname"), 
+                    config.getString("database.h2.dbuser"),
+                    config.getString("database.h2.dbpass"));
 
             if (!database.check()){
                 getLogger().info("PPTenshi has encountered an error when writing and/or reading the H2 local database");

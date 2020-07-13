@@ -19,20 +19,16 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PlayerListener implements Listener {
 
     final PasswordTenshi pt;
-    private final ArrayList<String> ALLOWED_COMMANDS;
+    private final List<String> ALLOWED_COMMANDS = Arrays.asList("/login", "/register");
 
     public PlayerListener(PasswordTenshi pt){
         this.pt = pt;
-
-        // kinda stupid but it should work
-        ALLOWED_COMMANDS = new ArrayList<>();
-        ALLOWED_COMMANDS.add("/login ");
-        ALLOWED_COMMANDS.add("/register ");
     }
 
     @EventHandler
