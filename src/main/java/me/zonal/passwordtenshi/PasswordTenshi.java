@@ -33,6 +33,7 @@ public class PasswordTenshi extends JavaPlugin {
 
         loadConfigFile();
         authentication_map = new ConcurrentHashMap<>();
+        repeat_task_id = new ConcurrentHashMap<>();
         FileConfiguration config = this.getConfig();
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 
@@ -42,11 +43,11 @@ public class PasswordTenshi extends JavaPlugin {
         this.getCommand("resetplayer").setExecutor(new CommandUnregisterPlayer(this));
 
         if (config.getBoolean("database.mysql.enable")){
-            database = new MySQLdb((String) config.getString("database.mysql.dbhost"),
+            database = new MySQLdb(config.getString("database.mysql.dbhost"),
                     (int) config.get("database.mysql.dbport"),
-                    (String) config.getString("database.mysql.dbname"), 
-                    (String) config.getString("database.dbuser"),
-                    (String) config.getString("database.mysql.dbpass"));
+                    config.getString("database.mysql.dbname"),
+                    config.getString("database.dbuser"),
+                    config.getString("database.mysql.dbpass"));
 
             if (!database.check()){
                 config.set("database.mysql.enable", false);
@@ -101,6 +102,7 @@ public class PasswordTenshi extends JavaPlugin {
     }
 
     public boolean isAuthorized(UUID uuid){
+        if (uuid == null) { return false; }
         return authentication_map.get(uuid);
     }
 
@@ -125,6 +127,7 @@ public class PasswordTenshi extends JavaPlugin {
     public void sendRegisterLoginSpam(Player player) {
 
         boolean registered = getPasswordHash(player.getUniqueId()) != null;
+        UUID uuid = player.getUniqueId();
 
         if (!registered) {
             player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
@@ -134,19 +137,19 @@ public class PasswordTenshi extends JavaPlugin {
 
         int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 
-            if (!isAuthorized(player.getUniqueId())) {
+            if (player.isOnline() && !isAuthorized(uuid)) {
                 if (!registered) {
                     player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
                 } else {
                     player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
                 }
             } else {
-                Bukkit.getScheduler().cancelTask(repeat_task_id.get(player.getUniqueId()));
-                repeat_task_id.remove(player.getUniqueId());
+                Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid));
+                repeat_task_id.remove(uuid);
             }
-        }, 0L, 100L);
+        }, 0L, 200L);
 
-        repeat_task_id.put(player.getUniqueId(), id);
+        repeat_task_id.put(uuid, id);
 
     }
 }
