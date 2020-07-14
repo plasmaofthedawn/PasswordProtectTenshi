@@ -8,6 +8,7 @@ import me.zonal.passwordtenshi.commands.CommandUnregister;
 import me.zonal.passwordtenshi.commands.CommandUnregisterPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PasswordTenshi extends JavaPlugin {
 
+    public static final String chatprefix = ChatColor.AQUA+"[PPTenshi]"+ChatColor.WHITE+" ";
     ConcurrentHashMap<UUID, Boolean> authentication_map;
     ConcurrentHashMap<UUID, Integer> repeat_task_id;
     Database database;
@@ -46,7 +48,7 @@ public class PasswordTenshi extends JavaPlugin {
             database = new MySQLdb(config.getString("database.mysql.dbhost"),
                     config.getInt("database.mysql.dbport"),
                     config.getString("database.mysql.dbname"),
-                    config.getString("database.dbuser"),
+                    config.getString("database.mysql.dbuser"),
                     config.getString("database.mysql.dbpass"));
 
             if (!database.check()){
@@ -130,9 +132,9 @@ public class PasswordTenshi extends JavaPlugin {
         UUID uuid = player.getUniqueId();
 
         if (!registered) {
-            player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
+            player.sendMessage(chatprefix+"register using /register <password> you baka~");
         } else {
-            player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
+            player.sendMessage(chatprefix+"login using /login <password> you baka~");
         }
 
         final int[] times = {0};
@@ -141,9 +143,9 @@ public class PasswordTenshi extends JavaPlugin {
 
             if (player.isOnline() && !isAuthorized(uuid)) {
                 if (!registered) {
-                    player.sendMessage("§bPPTenshi says§r: register using /register <password> you baka~");
+                    player.sendMessage(chatprefix+"register using /register <password> you baka~");
                 } else {
-                    player.sendMessage("§bPPTenshi says§r: login using /login <password> you baka~");
+                    player.sendMessage(chatprefix+"login using /login <password> you baka~");
                 }
             } else {
                 Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid));
@@ -153,7 +155,7 @@ public class PasswordTenshi extends JavaPlugin {
             times[0]++;
 
             if (times[0] > 12) {
-                player.kickPlayer("§bPPTenshi says§r: you've been logged out for too long");
+                player.kickPlayer(chatprefix+"you've been logged out for too long");
             }
 
         }, 0L, 200L);
