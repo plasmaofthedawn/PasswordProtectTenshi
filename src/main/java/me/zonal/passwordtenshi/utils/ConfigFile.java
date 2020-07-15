@@ -81,16 +81,6 @@ public class ConfigFile {
         language = YamlConfiguration.loadConfiguration(languagefile);
         InputStream internalimplementation = pt.getResource("language.yml");
         language.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(internalimplementation)));
-        final String[] defaultloginmgs = {"welcome back, my homie",
-                                    "ello there, $PLAYER",
-                                    "welcome to Fox Den minecraft server",
-                                    "aye, remember to read the server rules in discord. https://discordapp.com/channels/703206575258599425/717495743468011641/730511694043938906",
-                                    "hey $PLAYER , join our discord for news and updates. https://discord.gg/uABpxMx"};
-        final String[] changeregistermgs = {"i got your password now <3",
-                                    "your password is now mine $PLAYER -senpai",
-                                    "passsword be yummy, thanks",
-                                    "your password is safe with me dont worry $PLAYER -senpai",
-                                    "nice password, bro"};
         //general config
         //mysql
         config.addDefault("database.mysql.enable", false);

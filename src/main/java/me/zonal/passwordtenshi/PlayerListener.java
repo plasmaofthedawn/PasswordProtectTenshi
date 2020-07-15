@@ -1,5 +1,7 @@
 package me.zonal.passwordtenshi;
 
+import me.zonal.passwordtenshi.utils.ConfigFile;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -25,10 +27,12 @@ import java.util.List;
 public class PlayerListener implements Listener {
 
     final PasswordTenshi pt;
+    private final ConfigFile config;
     private final List<String> ALLOWED_COMMANDS = Arrays.asList("/login", "/register");
 
     public PlayerListener(PasswordTenshi pt){
         this.pt = pt;
+        config = new ConfigFile(this.pt);
     }
 
     @EventHandler
@@ -40,7 +44,7 @@ public class PlayerListener implements Listener {
                 boolean authorized = this.pt.authentication_map.get(player.getUniqueId());
                 if (authorized) {
                     event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-                    event.setKickMessage("§bPPTenshi says§r: bruh you're already online");
+                    event.setKickMessage(config.getLocal("console.already_online_kick"));
                     return;
                 }
             }

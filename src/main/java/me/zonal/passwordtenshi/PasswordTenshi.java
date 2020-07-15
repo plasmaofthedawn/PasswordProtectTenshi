@@ -22,7 +22,7 @@ public class PasswordTenshi extends JavaPlugin {
     ConcurrentHashMap<UUID, Boolean> authentication_map;
     ConcurrentHashMap<UUID, Integer> repeat_task_id;
     Database database;
-    ConfigFile config = new ConfigFile(this);
+    private final ConfigFile config = new ConfigFile(this);
 
     // ConcurrentHashMap<UUID, String> password_map;
     // :OkayuPray: for password_map
@@ -113,9 +113,9 @@ public class PasswordTenshi extends JavaPlugin {
         UUID uuid = player.getUniqueId();
 
         if (!registered) {
-            player.sendMessage("register using /register <password> you baka~");
+            player.sendMessage(config.getLocal("register.first_message"));
         } else {
-            player.sendMessage("login using /login <password> you baka~");
+            player.sendMessage(config.getLocal("login.first_message"));
         }
 
         final int[] times = {0};
@@ -124,9 +124,9 @@ public class PasswordTenshi extends JavaPlugin {
 
             if (player.isOnline() && !isAuthorized(uuid)) {
                 if (!registered) {
-                    player.sendMessage("register using /register <password> you baka~");
+                    player.sendMessage(config.getLocal("register.first_message"));
                 } else {
-                    player.sendMessage("login using /login <password> you baka~");
+                    player.sendMessage(config.getLocal("login.first_message"));
                 }
             } else {
                 Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid));
@@ -136,7 +136,7 @@ public class PasswordTenshi extends JavaPlugin {
             times[0]++;
 
             if (times[0] > 12) {
-                player.kickPlayer("you've been logged out for too long");
+                player.kickPlayer(config.getLocal("console.afk_kick"));
             }
 
         }, 0L, 200L);

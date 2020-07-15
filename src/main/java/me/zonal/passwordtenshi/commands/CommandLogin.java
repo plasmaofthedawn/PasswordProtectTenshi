@@ -2,7 +2,7 @@ package me.zonal.passwordtenshi.commands;
 
 import me.zonal.passwordtenshi.PasswordChecker;
 import me.zonal.passwordtenshi.PasswordTenshi;
-import me.zonal.passwordtenshi.utils.*;
+import me.zonal.passwordtenshi.utils.ConfigFile;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.ChatColor;
@@ -46,7 +46,7 @@ public class CommandLogin implements CommandExecutor {
 
             try {
                 String hash = pt.getPasswordHash(player.getUniqueId());
-                pt.getLogger().info(config.getLocal("console.log.player_login")+" "+player.getDisplayName());
+                pt.getLogger().info(config.getLocal("console.player_login")+" "+player.getDisplayName());
                 if (PasswordChecker.check(password, hash)) {
                     sender.sendMessage(config.getLoginMsg(player.getDisplayName()));
                     pt.setAuthorized(player.getUniqueId(), true);
@@ -67,9 +67,6 @@ public class CommandLogin implements CommandExecutor {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            sender.sendMessage("fuck fuck fuck fuck");
-
         });
         return true;
     }

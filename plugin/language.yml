@@ -2,8 +2,11 @@ random:
     use_random_login-register_messages: true
 console:
     console_not_allowed: fuck off console user
-    player_login: Logging in player=
+    player_login: Logging in player
+    afk_kick: you've been logged out for too long
+    already_online_kick: bruh you're already online
 login:
+    first_message: login using /login <password> you baka~
     wrong_password: that aint the right password
     not_registered: register first pls
     no_arguments: enter a password
@@ -12,9 +15,10 @@ login:
         - welcome back, my homie
         - ello there, $PLAYER
         - welcome to Fox Den minecraft server
-        - aye, remember to read the server rules in discord. https://discordapp.com/channels/703206575258599425/717495743468011641/730511694043938906
+        - aye, remember to read the server rules in discord. https://bit.ly/3fAxS2e
         - hey $PLAYER , join our discord for news and updates. https://discord.gg/uABpxMx
 register:
+    first_message: register using /register <password> you baka~
     no_arguments: enter a password
     already_registered: you already have a password, use /login
     register_messages:
@@ -23,6 +27,16 @@ register:
         - passsword be yummy, thanks
         - your password is safe with me dont worry $PLAYER -senpai
         - nice password, bro
+unregister:
+    player_unregister: you have lost your registered abilities
+    register_again: register (/register <password>) again you baka~
+unregisterplayer:
+    unrecognized_execution: fuck off whoever you are
+    no_arguments: you need to specify which player :p
+    player_not_op: you're not a mod
+    player_not_online: couldn't find that player online >.<
+    successful_unregister: rip that dudes password OkayuPray
+    target_player_unregister: your password privileges have been removed
 pptenshi:
     chat:
         color: WHITE

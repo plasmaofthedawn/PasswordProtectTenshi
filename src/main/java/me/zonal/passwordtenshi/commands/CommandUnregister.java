@@ -1,6 +1,7 @@
 package me.zonal.passwordtenshi.commands;
 
 import me.zonal.passwordtenshi.PasswordTenshi;
+import me.zonal.passwordtenshi.utils.ConfigFile;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,15 +12,17 @@ import org.bukkit.entity.Player;
 public class CommandUnregister implements CommandExecutor {
 
     private final PasswordTenshi pt;
+    private final ConfigFile config;
 
     public CommandUnregister(PasswordTenshi pt) {
         this.pt = pt;
+        config = new ConfigFile(this.pt);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§bPPTenshi says§r: fuck off console user");
+            sender.sendMessage(config.getLocal("console.console_not_allowed"));
             return true;
         }
 
@@ -29,10 +32,10 @@ public class CommandUnregister implements CommandExecutor {
 
             try {
                 pt.removePasswordHash(player.getUniqueId());
-                sender.sendMessage("§bPPTenshi says§r: you have lost your registered abilities");
+                sender.sendMessage(config.getLocal("unregister.player_unregister"));
                 pt.setAuthorized(player.getUniqueId(), false);
 
-                player.sendMessage("§bPPTenshi says§r: register (/register <password>) again you baka~");
+                player.sendMessage(config.getLocal("unregister.register_again"));
 
                 pt.sendRegisterLoginSpam(player);
 
@@ -40,8 +43,6 @@ public class CommandUnregister implements CommandExecutor {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            sender.sendMessage("§bPPTenshi says§r: fuck fuck fuck fuck");
         });
         return true;
     }

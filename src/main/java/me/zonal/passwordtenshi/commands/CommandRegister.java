@@ -2,6 +2,7 @@ package me.zonal.passwordtenshi.commands;
 
 import me.zonal.passwordtenshi.PasswordChecker;
 import me.zonal.passwordtenshi.PasswordTenshi;
+import me.zonal.passwordtenshi.utils.ConfigFile;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -13,20 +14,22 @@ import org.bukkit.entity.Player;
 public class CommandRegister implements CommandExecutor {
 
     private final PasswordTenshi pt;
+    private final ConfigFile config;
 
     public CommandRegister(PasswordTenshi pt) {
         this.pt = pt;
+        config = new ConfigFile(this.pt);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§bPPTenshi says§r: fuck off console user");
+            sender.sendMessage(config.getLocal("console.console_not_allowed"));
             return true;
         }
 
         if (args.length == 0) {
-            sender.sendMessage("§bPPTenshi says§r: enter a password");
+            sender.sendMessage(config.getLocal("register.no_arguments"));
             return false;
         }
 
@@ -37,7 +40,7 @@ public class CommandRegister implements CommandExecutor {
 
 
             if (pt.getPasswordHash(player.getUniqueId()) != null) {
-                sender.sendMessage("§bPPTenshi says§r: you already have a password, use /login");
+                sender.sendMessage(config.getLocal("register.already_registered"));
                 return;
             }
 
@@ -51,13 +54,11 @@ public class CommandRegister implements CommandExecutor {
                     player.setGameMode(GameMode.SURVIVAL);
                 }
 
-                sender.sendMessage("§bPPTenshi says§r: i got your password now <3");
+                sender.sendMessage(config.getRegisterMsg(player.getDisplayName()));
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            sender.sendMessage("§bPPTenshi says§r: fuck fuck fuck fuck");
         });
 
         return true;

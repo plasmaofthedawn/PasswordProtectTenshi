@@ -1,6 +1,7 @@
 package me.zonal.passwordtenshi.commands;
 
 import me.zonal.passwordtenshi.PasswordTenshi;
+import me.zonal.passwordtenshi.utils.ConfigFile;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,25 +13,27 @@ import org.bukkit.entity.Player;
 public class CommandUnregisterPlayer implements CommandExecutor {
 
     private final PasswordTenshi pt;
+    private final ConfigFile config;
 
     public CommandUnregisterPlayer(PasswordTenshi pt) {
         this.pt = pt;
+        config = new ConfigFile(this.pt);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
          if (!(sender instanceof Player) && !(sender instanceof ConsoleCommandSender)) {
-            sender.sendMessage("§bPPTenshi says§r: fuck off whoever you are");
+            sender.sendMessage(config.getLocal("unregisterplayer.unrecognized_execution"));
             return true;
          }
 
          if (!(sender instanceof ConsoleCommandSender) && !sender.isOp()) {
-             sender.sendMessage("§bPPTenshi says§r: you're not a mod");
+             sender.sendMessage(config.getLocal("unregisterplayer.player_not_op"));
              return true;
          }
 
          if (args.length == 0) {
-             sender.sendMessage("§bPPTenshi says§r: you need to specify which player :p");
+             sender.sendMessage(config.getLocal("unregisterplayer.no_arguments"));
              return false;
          }
 
@@ -39,15 +42,15 @@ public class CommandUnregisterPlayer implements CommandExecutor {
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage("§bPPTenshi says§r: couldn't find that player online >.<");
+                sender.sendMessage(config.getLocal("unregisterplayer.player_not_online"));
                 return;
             }
 
             try {
                 pt.removePasswordHash(player.getUniqueId());
-                sender.sendMessage("§bPPTenshi says§r: rip that dudes password :OkayuPray:");
-                player.sendMessage("§bPPTenshi says§r: your password privileges have been removed");
-                player.sendMessage("§bPPTenshi says§r: register (/register <password>) again you baka~");
+                sender.sendMessage(config.getLocal("unregisterplayer.successful_unregister"));
+                player.sendMessage(config.getLocal("unregisterplayer.target_player_unregister"));
+                player.sendMessage(config.getLocal("unregister.register_again"));
                 pt.setAuthorized(player.getUniqueId(), false);
 
                 pt.sendRegisterLoginSpam(player);
@@ -56,7 +59,6 @@ public class CommandUnregisterPlayer implements CommandExecutor {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            sender.sendMessage("§bPPTenshi says§r: fuck fuck fuck fuck");
         });
         return false;
     }
