@@ -1,4 +1,4 @@
-package me.zonal.passwordtenshi;
+package me.zonal.passwordtenshi.utils;
 
 
 import org.apache.logging.log4j.Level;

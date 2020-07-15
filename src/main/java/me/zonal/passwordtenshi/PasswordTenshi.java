@@ -2,10 +2,8 @@ package me.zonal.passwordtenshi;
 
 
 import me.zonal.passwordtenshi.database.*;
-import me.zonal.passwordtenshi.commands.CommandLogin;
-import me.zonal.passwordtenshi.commands.CommandRegister;
-import me.zonal.passwordtenshi.commands.CommandUnregister;
-import me.zonal.passwordtenshi.commands.CommandUnregisterPlayer;
+import me.zonal.passwordtenshi.commands.*;
+import me.zonal.passwordtenshi.utils.*;
 import org.apache.logging.log4j.LogManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,10 +19,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PasswordTenshi extends JavaPlugin {
 
-    public static final String chatprefix = ChatColor.AQUA+"[PPTenshi]"+ChatColor.WHITE+" ";
     ConcurrentHashMap<UUID, Boolean> authentication_map;
     ConcurrentHashMap<UUID, Integer> repeat_task_id;
     Database database;
+    ConfigFile config = new ConfigFile(this);
 
     // ConcurrentHashMap<UUID, String> password_map;
     // :OkayuPray: for password_map
@@ -33,10 +31,9 @@ public class PasswordTenshi extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        loadConfigFile();
+        config.initializeConfig();
         authentication_map = new ConcurrentHashMap<>();
         repeat_task_id = new ConcurrentHashMap<>();
-        FileConfiguration config = this.getConfig();
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 
         this.getCommand("register").setExecutor(new CommandRegister(this));
@@ -45,14 +42,14 @@ public class PasswordTenshi extends JavaPlugin {
         this.getCommand("resetplayer").setExecutor(new CommandUnregisterPlayer(this));
 
         if (config.getBoolean("database.mysql.enable")){
-            database = new MySQLdb(config.getString("database.mysql.dbhost"),
-                    config.getInt("database.mysql.dbport"),
-                    config.getString("database.mysql.dbname"),
-                    config.getString("database.mysql.dbuser"),
-                    config.getString("database.mysql.dbpass"));
+            database = new MySQLdb(config.getString("database.mysql.database_host"),
+                    config.getInt("database.mysql.database_port"),
+                    config.getString("database.mysql.database_name"),
+                    config.getString("database.mysql.database_user"),
+                    config.getString("database.mysql.database_password"));
 
             if (!database.check()){
-                config.set("database.mysql.enable", false);
+                config.setBoolean("database.mysql.enable", false);
                 getLogger().info("PPTenshi is falling back to H2 local database, check your MySQL configuration.");
                 database = null;
             } else {
@@ -61,12 +58,12 @@ public class PasswordTenshi extends JavaPlugin {
         }  
         
         if (!config.getBoolean("database.mysql.enable")){
-            Path path = Paths.get(getDataFolder().getAbsolutePath(), config.getString("database.h2.dbname"));
+            Path path = Paths.get(getDataFolder().getAbsolutePath(), config.getString("database.h2.database_name"));
             database = new H2db(path.toString(),
-                    config.getInt("database.mysql.dbport"),
-                    config.getString("database.h2.dbname"), 
-                    config.getString("database.h2.dbuser"),
-                    config.getString("database.h2.dbpass"));
+                    config.getInt("database.mysql.database_port"),
+                    config.getString("database.h2.database_name"), 
+                    config.getString("database.h2.database_user"),
+                    config.getString("database.h2.database_password"));
 
             if (!database.check()){
                 getLogger().info("PPTenshi has encountered an error when writing and/or reading the H2 local database");
@@ -81,22 +78,6 @@ public class PasswordTenshi extends JavaPlugin {
         consoleLogger.addFilter(new LogFilter());
         getLogger().info("PPTenshi be here to protect your server <3");
     }
-
-    public void loadConfigFile() {
-
-        this.getConfig().addDefault("database.mysql.enable", false);
-        this.getConfig().addDefault("database.mysql.dbhost", "myhostdb");
-        this.getConfig().addDefault("database.mysql.dbport", 3306);
-        this.getConfig().addDefault("database.mysql.dbname", "mypasswordb");
-        this.getConfig().addDefault("database.mysql.dbuser", "mydbuser");
-        this.getConfig().addDefault("database.mysql.dbpass", "mydbpass");
-        this.getConfig().addDefault("database.h2.dbname", "pass");
-        this.getConfig().addDefault("database.h2.dbuser", "dontchangeme");
-        this.getConfig().addDefault("database.h2.dbpass", "dontchangeme");
-        this.getConfig().options().copyDefaults(true);
-        this.saveConfig();
-
-     }
 
     @Override
     public void onDisable(){
@@ -132,9 +113,9 @@ public class PasswordTenshi extends JavaPlugin {
         UUID uuid = player.getUniqueId();
 
         if (!registered) {
-            player.sendMessage(chatprefix+"register using /register <password> you baka~");
+            player.sendMessage("register using /register <password> you baka~");
         } else {
-            player.sendMessage(chatprefix+"login using /login <password> you baka~");
+            player.sendMessage("login using /login <password> you baka~");
         }
 
         final int[] times = {0};
@@ -143,9 +124,9 @@ public class PasswordTenshi extends JavaPlugin {
 
             if (player.isOnline() && !isAuthorized(uuid)) {
                 if (!registered) {
-                    player.sendMessage(chatprefix+"register using /register <password> you baka~");
+                    player.sendMessage("register using /register <password> you baka~");
                 } else {
-                    player.sendMessage(chatprefix+"login using /login <password> you baka~");
+                    player.sendMessage("login using /login <password> you baka~");
                 }
             } else {
                 Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid));
@@ -155,7 +136,7 @@ public class PasswordTenshi extends JavaPlugin {
             times[0]++;
 
             if (times[0] > 12) {
-                player.kickPlayer(chatprefix+"you've been logged out for too long");
+                player.kickPlayer("you've been logged out for too long");
             }
 
         }, 0L, 200L);
