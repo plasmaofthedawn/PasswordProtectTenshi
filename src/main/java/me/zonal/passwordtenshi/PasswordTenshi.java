@@ -122,26 +122,33 @@ public class PasswordTenshi extends JavaPlugin {
 
         int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 
-            if (player.isOnline() && !isAuthorized(uuid)) {
-                if (!registered) {
-                    player.sendMessage(config.getLocal("register.first_message"));
+            try {
+
+                if (player.isOnline() && !isAuthorized(uuid)) {
+                    if (!registered) {
+                        player.sendMessage(config.getLocal("register.first_message"));
+                    } else {
+                        player.sendMessage(config.getLocal("login.first_message"));
+                    }
                 } else {
-                    player.sendMessage(config.getLocal("login.first_message"));
+                    Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid));
+                    repeat_task_id.remove(uuid);
                 }
-            } else {
+
+                times[0]++;
+
+                if (times[0] > 12) {
+                    player.kickPlayer(config.getLocal("console.afk_kick"));
+                }
+
+            } catch (Exception e) {
                 Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid));
                 repeat_task_id.remove(uuid);
             }
 
-            times[0]++;
+            }, 0L, 200L);
 
-            if (times[0] > 12) {
-                player.kickPlayer(config.getLocal("console.afk_kick"));
-            }
-
-        }, 0L, 200L);
-
-        repeat_task_id.put(uuid, id);
+            repeat_task_id.put(uuid, id);
 
     }
 }
