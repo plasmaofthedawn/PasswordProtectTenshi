@@ -108,11 +108,10 @@ public class ConfigFile {
     
 
     private ChatColor getColor(String color) {
-        ChatColor newcolor;
         try {
-            return newcolor = ChatColor.valueOf(color.toUpperCase().replaceAll("\\s+", ""));
+            return ChatColor.valueOf(color.toUpperCase().replaceAll("\\s+", ""));
         } catch(Exception ex) {
-            return newcolor = ChatColor.WHITE;
+            return ChatColor.WHITE;
         }
     }
 }
