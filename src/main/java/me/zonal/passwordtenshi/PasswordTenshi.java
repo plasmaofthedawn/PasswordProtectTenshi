@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PasswordTenshi extends JavaPlugin {
 
     ConcurrentHashMap<UUID, Boolean> authentication_map;
-    ConcurrentHashMap<UUID, Integer> repeat_task_id;
+    ConcurrentHashMap<String, Integer> repeat_task_id;
     Database database;
     private final ConfigFile config = new ConfigFile(this);
 
@@ -111,6 +111,7 @@ public class PasswordTenshi extends JavaPlugin {
 
         boolean registered = getPasswordHash(player.getUniqueId()) != null;
         UUID uuid = player.getUniqueId();
+        String uuid_string = uuid.toString();
 
         if (!registered) {
             player.sendMessage(config.getLocal("register.first_message"));
@@ -131,8 +132,8 @@ public class PasswordTenshi extends JavaPlugin {
                         player.sendMessage(config.getLocal("login.first_message"));
                     }
                 } else {
-                    Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid));
-                    repeat_task_id.remove(uuid);
+                    Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid_string));
+                    repeat_task_id.remove(uuid_string);
                 }
 
                 times[0]++;
@@ -142,13 +143,13 @@ public class PasswordTenshi extends JavaPlugin {
                 }
 
             } catch (Exception e) {
-                Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid));
-                repeat_task_id.remove(uuid);
+                Bukkit.getScheduler().cancelTask(repeat_task_id.get(uuid_string));
+                repeat_task_id.remove(uuid_string);
             }
 
             }, 0L, 200L);
 
-            repeat_task_id.put(uuid, id);
+            repeat_task_id.put(uuid_string, id);
 
     }
 }
