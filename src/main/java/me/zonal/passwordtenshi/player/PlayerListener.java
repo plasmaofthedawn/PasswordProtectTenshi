@@ -1,6 +1,7 @@
-package me.zonal.passwordtenshi;
+package me.zonal.passwordtenshi.player;
 
 import me.zonal.passwordtenshi.utils.ConfigFile;
+import me.zonal.passwordtenshi.PasswordTenshi;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -27,12 +28,10 @@ import java.util.List;
 public class PlayerListener implements Listener {
 
     final PasswordTenshi pt;
-    private final ConfigFile config;
     private final List<String> ALLOWED_COMMANDS = Arrays.asList("/login", "/register");
 
     public PlayerListener(PasswordTenshi pt){
         this.pt = pt;
-        config = new ConfigFile(this.pt);
     }
 
     @EventHandler
@@ -41,10 +40,10 @@ public class PlayerListener implements Listener {
         // Check if the player already is online (and kick the current one)
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getName().equalsIgnoreCase(event.getName())) {
-                boolean authorized = this.pt.authentication_map.get(player.getUniqueId());
+                boolean authorized = PlayerStorage.getPlayerSession(player.getUniqueId()).isAuthorized();
                 if (authorized) {
                     event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-                    event.setKickMessage(config.getLocal("console.already_online_kick"));
+                    event.setKickMessage(ConfigFile.getLocal("console.already_online_kick"));
                     return;
                 }
             }
@@ -55,27 +54,23 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent event) {
         // Remove the player from the sessions because he's being yeeted
-        this.pt.authentication_map.remove(event.getPlayer().getUniqueId());
+        PlayerStorage.removePlayerSession(event.getPlayer().getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent event) {
 
-        final Player player = event.getPlayer();
-        if(isInvalidPlayer(player)) return;
-
-        // start the session for the player
-        this.pt.authentication_map.put(player.getUniqueId(), false);
-
-        pt.sendRegisterLoginSpam(player);
-
-        // final LoginSecurityConfig config = LoginSecurity.getConfiguration();
+        if(isInvalidPlayer(event.getPlayer())) return;
+        final Player player = Bukkit.getPlayer(event.getPlayer().getName());
+        final PlayerSession playersession = new PlayerSession(player); //create the new session
+        playersession.registerLoginReminder(); //start the spam
+        PlayerStorage.addPlayerSession(playersession); //store in playerstorage
     }
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
         if(isInvalidPlayer(event.getPlayer())) return;
-        if(pt.isAuthorized(event.getPlayer().getUniqueId())) return;
+        if(PlayerStorage.getPlayerSession(event.getPlayer().getUniqueId()).isAuthorized()) return;
 
         event.setCancelled(true);
     }
@@ -83,7 +78,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if(isInvalidPlayer(event.getPlayer())) return;
-        if(pt.isAuthorized(event.getPlayer().getUniqueId())) return;
+        if(PlayerStorage.getPlayerSession(event.getPlayer().getUniqueId()).isAuthorized()) return;
 
         event.setCancelled(true);
     }
@@ -91,7 +86,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         if(isInvalidPlayer(event.getPlayer())) return;
-        if(pt.isAuthorized(event.getPlayer().getUniqueId())) return;
+        if(PlayerStorage.getPlayerSession(event.getPlayer().getUniqueId()).isAuthorized()) return;
 
         event.setCancelled(true);
     }
@@ -108,7 +103,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if(isInvalidPlayer(event.getPlayer())) return;
-        if(pt.isAuthorized(event.getPlayer().getUniqueId())) return;
+        if(PlayerStorage.getPlayerSession(event.getPlayer().getUniqueId()).isAuthorized()) return;
 
         // Check whitelisted commands, and allow it if it's whitelisted
         final String message = event.getMessage().toLowerCase();
@@ -130,7 +125,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerMove(PlayerMoveEvent event) {
         if(isInvalidPlayer(event.getPlayer())) return;
-        if(pt.isAuthorized(event.getPlayer().getUniqueId())) return;
+        if(PlayerStorage.getPlayerSession(event.getPlayer().getUniqueId()).isAuthorized()) return;
 
         // Prevent moving
         final Location from = event.getFrom();
@@ -163,7 +158,7 @@ public class PlayerListener implements Listener {
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
         final Player player = (Player) event.getEntity();
         if(isInvalidPlayer(player)) return;
-        if(pt.isAuthorized(player.getUniqueId())) return;
+        if(PlayerStorage.getPlayerSession(player.getUniqueId()).isAuthorized()) return;
 
         event.setCancelled(true);
     }
@@ -173,7 +168,7 @@ public class PlayerListener implements Listener {
         if(event.getEntityType() != EntityType.PLAYER) return; // Not a player
         final Player player = (Player) event.getEntity();
         if(isInvalidPlayer(player)) return;
-        if(pt.isAuthorized(player.getUniqueId())) return;
+        if(PlayerStorage.getPlayerSession(player.getUniqueId()).isAuthorized()) return;
 
         event.setCancelled(true);
     }
@@ -184,7 +179,7 @@ public class PlayerListener implements Listener {
         final Player player = (Player) event.getTarget();
         if(!player.isOnline()) return; // Target logged out
         if(isInvalidPlayer(player)) return;
-        if(pt.isAuthorized(player.getUniqueId())) return;
+        if(PlayerStorage.getPlayerSession(player.getUniqueId()).isAuthorized()) return;
 
         event.setCancelled(true);
     }
@@ -194,7 +189,7 @@ public class PlayerListener implements Listener {
             throw new IllegalArgumentException("Event cannot be cancelled!");
         }
         if(isInvalidPlayer(event.getPlayer())) return;
-        if(pt.isAuthorized(event.getPlayer().getUniqueId())) return;
+        if(PlayerStorage.getPlayerSession(event.getPlayer().getUniqueId()).isAuthorized()) return;
 
         ((Cancellable) event).setCancelled(true);
     }

@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 
 public class ConfigFile {
-    private final PasswordTenshi pt;
+    private static PasswordTenshi pt;
     private static FileConfiguration config;
     private static FileConfiguration language;
     private static Boolean randommsg;
@@ -23,12 +23,8 @@ public class ConfigFile {
     private static String[] loginmgs;
     private static String[] registermgs;
 
-    public ConfigFile(PasswordTenshi pt) {
-        this.pt = pt;
-    }
-
     //translation
-    public String getLoginMsg(String player){
+    public static String getLoginMsg(String player){
         if (randommsg) {
             int randomindex = new Random().nextInt(loginmgs.length);
             return chatprefix+loginmgs[randomindex].replace("$PLAYER", player);
@@ -37,7 +33,7 @@ public class ConfigFile {
         }
     }
 
-    public String getRegisterMsg(String player){
+    public static String getRegisterMsg(String player){
         if (randommsg) {
             int randomindex = new Random().nextInt(registermgs.length);
             return chatprefix+registermgs[randomindex].replace("$PLAYER", player);
@@ -46,32 +42,33 @@ public class ConfigFile {
         }
     }
 
-    public String getLocal(String ymlpath){
+    public static String getLocal(String ymlpath){
         return chatprefix+language.getString(ymlpath);
     }
     //config
-    public String getString(String ymlpath){
+    public static String getString(String ymlpath){
         return config.getString(ymlpath);
     }
 
-    public Integer getInt(String ymlpath){
+    public static Integer getInt(String ymlpath){
         return config.getInt(ymlpath);
     }
 
-    public Boolean getBoolean(String ymlpath){
+    public static Boolean getBoolean(String ymlpath){
         return config.getBoolean(ymlpath);
     }
 
-    public Boolean getlangBoolean(String ymlpath){
+    public static Boolean getlangBoolean(String ymlpath){
         return language.getBoolean(ymlpath);
     }
 
-    public void setBoolean(String ymlpath, Boolean value){
+    public static void setBoolean(String ymlpath, Boolean value){
         config.set(ymlpath, value);
     }
 
-    public void initializeConfig() {
+    public static void initializeConfig(PasswordTenshi ptt) {
         //initialize stuff
+        pt = ptt;
         randommsg = false;
         config = pt.getConfig();
         File languagefile = new File(pt.getDataFolder().getAbsolutePath(), "language.yml");
@@ -107,7 +104,7 @@ public class ConfigFile {
     }
     
 
-    private ChatColor getColor(String color) {
+    private static ChatColor getColor(String color) {
         try {
             return ChatColor.valueOf(color.toUpperCase().replaceAll("\\s+", ""));
         } catch(Exception ex) {
