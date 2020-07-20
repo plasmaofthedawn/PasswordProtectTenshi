@@ -2,6 +2,9 @@ package me.zonal.passwordtenshi.commands;
 
 import me.zonal.passwordtenshi.PasswordTenshi;
 import me.zonal.passwordtenshi.utils.ConfigFile;
+import me.zonal.passwordtenshi.player.PlayerSession;
+import me.zonal.passwordtenshi.player.PlayerStorage;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,32 +15,31 @@ import org.bukkit.entity.Player;
 public class CommandUnregister implements CommandExecutor {
 
     private final PasswordTenshi pt;
-    private final ConfigFile config;
 
     public CommandUnregister(PasswordTenshi pt) {
         this.pt = pt;
-        config = new ConfigFile(this.pt);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(config.getLocal("console.console_not_allowed"));
+            sender.sendMessage(ConfigFile.getLocal("console.console_not_allowed"));
             return true;
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(pt, () -> {
 
             Player player = (Player) sender;
+            PlayerSession playersession = PlayerStorage.getPlayerSession(player.getUniqueId());
 
             try {
-                pt.removePasswordHash(player.getUniqueId());
-                sender.sendMessage(config.getLocal("unregister.player_unregister"));
-                pt.setAuthorized(player.getUniqueId(), false);
+                playersession.removePasswordHash();
+                sender.sendMessage(ConfigFile.getLocal("unregister.player_unregister"));
+                playersession.setAuthorized(false);
 
-                player.sendMessage(config.getLocal("unregister.register_again"));
+                player.sendMessage(ConfigFile.getLocal("unregister.register_again"));
 
-                pt.sendRegisterLoginSpam(player);
+                playersession.registerLoginReminder();
 
                 return;
             } catch (Exception e) {
