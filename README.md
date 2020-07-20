@@ -23,7 +23,7 @@ Currently supporting: `spigot-api:1.16.1-R0.1-SNAPSHOT` , Spigot 1.16.1.
 - Salted PBKDF2 password hashing.
 - Easy to setup. 
 - Translation support, implement your own messages and prefixes.
-- 
+
 ## Getting Started 
 
 To get started download (or compile) PPTenshi and place it in your plugins folder. After starting your server, the folder `plugins/PasswordProtectTenshi` will be created with the configuration files inside. 
