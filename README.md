@@ -57,4 +57,4 @@ After creating the H2 database, if you change the H2 database user or password t
 **Requirements**: 
 JDK 8
 
-To compile PPTenshi run `gradlew build` ,t he compiled jar will be at `build/libs`
+To compile PPTenshi run `gradlew build` , the compiled jar will be at `build/libs`
