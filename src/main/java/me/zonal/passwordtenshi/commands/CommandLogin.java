@@ -10,13 +10,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.logging.Logger;
+import java.util.Collections;
+import java.util.List;
 
-public class CommandLogin implements CommandExecutor {
+public class CommandLogin implements TabExecutor {
 
     private final PasswordTenshi pt;
     private final Logger logger;
@@ -46,7 +48,7 @@ public class CommandLogin implements CommandExecutor {
             for (String passArgument : args){
                 password += passArgument+" ";
             }
-            
+
             password = password.substring(0, password.length()-1);
             PlayerSession playersession = PlayerStorage.getPlayerSession(player.getUniqueId());
 
@@ -79,4 +81,10 @@ public class CommandLogin implements CommandExecutor {
         });
         return true;
     }
+
+    @Override
+    public List onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        return Collections.emptyList();
+    }
+
 }

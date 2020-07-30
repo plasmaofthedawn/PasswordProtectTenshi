@@ -9,12 +9,14 @@ import me.zonal.passwordtenshi.player.PlayerStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
+import java.util.List;
 
-public class CommandRegister implements CommandExecutor {
+public class CommandRegister implements TabExecutor {
 
     private final PasswordTenshi pt;
 
@@ -68,5 +70,10 @@ public class CommandRegister implements CommandExecutor {
             }
         });
         return true;
+    }
+
+    @Override
+    public List onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        return Collections.emptyList();
     }
 }
