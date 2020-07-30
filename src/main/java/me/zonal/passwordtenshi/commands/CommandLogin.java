@@ -56,7 +56,9 @@ public class CommandLogin implements CommandExecutor {
                     sender.sendMessage(ConfigFile.getLoginMsg(player.getDisplayName()));
                     playersession.setAuthorized(true);
                     if (player.getGameMode() == GameMode.SPECTATOR) {
-                        player.setGameMode(GameMode.SURVIVAL);
+                        Bukkit.getScheduler().runTask(pt, () -> {
+                            player.setGameMode(GameMode.SURVIVAL);
+                        });
                     }
 
                     return;
