@@ -41,7 +41,16 @@ public class CommandLogin implements CommandExecutor {
         Bukkit.getScheduler().runTaskAsynchronously(pt, () -> {
 
             Player player = (Player) sender;
-            final String password = args[0];
+
+            StringBuilder sb = new StringBuilder(args[0]);
+
+            for (int i = 1; i < args.length; i++) {
+                sb.append(" ");
+                sb.append(i);
+            }
+
+            final String password = sb.toString();
+
             PlayerSession playersession = PlayerStorage.getPlayerSession(player.getUniqueId());
 
             if (playersession.isAuthorized()) {

@@ -36,7 +36,15 @@ public class CommandRegister implements CommandExecutor {
 
         Bukkit.getScheduler().runTaskAsynchronously(pt, () -> {
 
-            final String password = args[0];
+            StringBuilder sb = new StringBuilder(args[0]);
+
+            for (int i = 1; i < args.length; i++) {
+                sb.append(" ");
+                sb.append(i);
+            }
+
+            final String password = sb.toString();
+
             Player player = (Player) sender;
             PlayerSession playersession = PlayerStorage.getPlayerSession(player.getUniqueId());
 
