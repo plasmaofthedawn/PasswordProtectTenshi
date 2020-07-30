@@ -85,7 +85,7 @@ public class PlayerSession {
                 }
                 times[0]++;
                 if (times[0] >= 12){
-                    player.kickPlayer(ConfigFile.getLocal("console.afk_kick"));
+                    Bukkit.getScheduler().runTask(pt, () -> player.kickPlayer(ConfigFile.getLocal("console.afk_kick")));
                     break;
                 }
             }
