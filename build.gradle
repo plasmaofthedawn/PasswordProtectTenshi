@@ -7,7 +7,7 @@ buildscript{
         mavenLocal()
         jcenter()
     }
-	dependencies{
+    dependencies{
         classpath 'net.sf.proguard:proguard-gradle:6.2.2'
     }
 
@@ -34,11 +34,10 @@ allprojects {
 }
 
 dependencies {
-	compileOnly "org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT"
-
-    compile 'com.h2database:h2:1.4.197'
+    compileOnly "org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT"
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
-	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
+    compile 'com.h2database:h2:1.4.197'
 }
 
 sourceSets {

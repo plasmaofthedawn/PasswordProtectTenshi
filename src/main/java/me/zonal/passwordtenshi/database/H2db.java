@@ -11,7 +11,7 @@ public class H2db implements Database{
     private Statement statement;
     private final JdbcConnectionPool credentials;
 
-    public H2db (String hostip, int port, String database, String user, String pass) { //TODO: FIX H2
+    public H2db (String hostip, int port, String database, String user, String pass) {
         credentials = JdbcConnectionPool.create("jdbc:h2:file:"+hostip+";IFEXISTS=FALSE", user, pass);
     }
 
