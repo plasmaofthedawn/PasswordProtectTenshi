@@ -52,7 +52,7 @@ public class CommandRegister implements CommandExecutor {
 
                 // TODO: make this not such a quick fix
                 if (player.getGameMode() == GameMode.SPECTATOR) {
-                    player.setGameMode(GameMode.SURVIVAL);
+                    Bukkit.getScheduler().runTask(pt, () -> player.setGameMode(GameMode.SURVIVAL));
                 }
 
                 sender.sendMessage(ConfigFile.getRegisterMsg(player.getDisplayName()));
