@@ -1,42 +1,40 @@
 random:
     use_random_login-register_messages: true
 console:
-    console_not_allowed: fuck off console user
+    console_not_allowed: This command can not be run from the console
     player_login: Logging in player
-    afk_kick: you've been logged out for too long
-    already_online_kick: bruh you're already online
+    afk_kick: You've been logged out for too long, use /login or /register
+    already_online_kick: You are already online
 login:
-    first_message: login using /login <password> you baka~
-    wrong_password: that aint the right password
-    not_registered: register first pls
-    no_arguments: enter a password
-    already_logged: why are you trying to log in again?
+    first_message: Login using /login <password>
+    wrong_password: That is not the right password. Try again
+    not_registered: You do not have an account. Register first with /register
+    no_arguments: Enter a password after /login, like this:\ /login <password>
+    already_logged: You are already logged in.
     login_messages:
-        - welcome back, my homie
-        - ello there, $PLAYER
-        - welcome to Fox Den minecraft server
-        - aye, remember to read the server rules in discord. https://bit.ly/3fAxS2e
-        - hey $PLAYER , join our discord for news and updates. https://discord.gg/uABpxMx
+        - Welcome back, $PLAYER
+        - Hello there, $PLAYER
+        - You have logged in.
+        - Remember to read the server rules in discord. https://bit.ly/3fAxS2e
+        - Hey $PLAYER , join our discord for news and updates. https://discord.gg/uABpxMx
 register:
-    first_message: register using /register <password> you baka~
-    no_arguments: enter a password
-    already_registered: you already have a password, use /login
+    first_message: Register using /register <password>
+    no_arguments: Enter a password after /register, like this:\ /register <password>
+    already_registered: You already have a password, use /login
     register_messages:
-        - i got your password now <3
-        - your password is now mine $PLAYER -senpai
-        - passsword be yummy, thanks
-        - your password is safe with me dont worry $PLAYER -senpai
-        - nice password, bro
+        - Enjoy your stay $PLAYER
+        - You have registered an account. Welcome.
+        - Welcome!
 unregister:
-    player_unregister: you have lost your registered abilities
-    register_again: register (/register <password>) again you baka~
+    player_unregister: You have lost your credentials
+    register_again: Register using /register <password> again.
 unregisterplayer:
-    unrecognized_execution: fuck off whoever you are
-    no_arguments: you need to specify which player :p
-    player_not_op: you're not a mod
-    player_not_online: couldn't find that player online >.<
-    successful_unregister: rip that dudes password OkayuPray
-    target_player_unregister: your password privileges have been removed
+    unrecognized_execution: You can not run this command, use it from the console or as an administrator
+    no_arguments: Please specify which player you wish to unregister
+    player_not_op: You are not a server administrator, therefore, you can not run this command
+    player_not_online: The specified player is not online, try again when they are online
+    successful_unregister: The password has been reset
+    target_player_unregister: Your credentials have been removed. Register again using /register <password>
 pptenshi:
     chat:
         color: WHITE
