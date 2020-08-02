@@ -7,8 +7,6 @@ import me.zonal.passwordtenshi.player.PlayerSession;
 import me.zonal.passwordtenshi.player.PlayerStorage;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,14 +27,20 @@ public class CommandLogin implements TabExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, 
+                             String label, String[] args) {
+        
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ConfigFile.getLocal("console.console_not_allowed"));
+            sender.sendMessage(
+                    ConfigFile.getLocal("console.console_not_allowed"));
+            
             return true;
         }
 
         if (args.length == 0) {
-            sender.sendMessage(ConfigFile.getLocal("login.no_arguments"));
+            sender.sendMessage(
+                    ConfigFile.getLocal("login.no_arguments"));
+            
             return false;
         }
 
@@ -50,31 +54,37 @@ public class CommandLogin implements TabExecutor {
             }
 
             password = password.substring(0, password.length()-1);
-            PlayerSession playersession = PlayerStorage.getPlayerSession(player.getUniqueId());
+            
+            PlayerSession playersession 
+                    = PlayerStorage
+                    .getPlayerSession(player.getUniqueId());
 
             if (playersession.isAuthorized()) {
-                sender.sendMessage(ConfigFile.getLocal("login.already_logged"));
+                sender.sendMessage(
+                        ConfigFile.getLocal("login.already_logged"));
                 return;
             }
 
             try {
                 String hash = playersession.getPasswordHash();
-                logger.info(ConfigFile.getLocal("console.player_login")+" "+player.getDisplayName());
+                logger.info(ConfigFile.getLocal("console.player_login")
+                        +" "+player.getDisplayName());
+                
                 if (PasswordChecker.check(password, hash)) {
-                    sender.sendMessage(ConfigFile.getLoginMsg(player.getDisplayName()));
+                    sender.sendMessage(
+                            ConfigFile.getLoginMsg(player.getDisplayName()));
+                    
                     playersession.setAuthorized(true);
-                    if (player.getGameMode() == GameMode.SPECTATOR) {
-                        Bukkit.getScheduler().runTask(pt, () -> player.setGameMode(GameMode.SURVIVAL));
-                    }
-
-                    return;
+                    Bukkit.getScheduler().runTask(pt, () -> 
+                            player.setGameMode(playersession.getGamemode()));
+                    
                 } else {
-                    sender.sendMessage(ConfigFile.getLocal("login.wrong_password"));
-                    return;
+                    sender.sendMessage(
+                            ConfigFile.getLocal("login.wrong_password"));
                 }
             } catch (NullPointerException e) {
-                sender.sendMessage(ConfigFile.getLocal("login.not_registered"));
-                return;
+                sender.sendMessage(
+                        ConfigFile.getLocal("login.not_registered"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -83,7 +93,8 @@ public class CommandLogin implements TabExecutor {
     }
 
     @Override
-    public List onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List onTabComplete(CommandSender sender, Command command, 
+                              String alias, String[] args) {
         return Collections.emptyList();
     }
 

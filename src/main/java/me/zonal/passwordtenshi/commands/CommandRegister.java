@@ -7,7 +7,6 @@ import me.zonal.passwordtenshi.player.PlayerSession;
 import me.zonal.passwordtenshi.player.PlayerStorage;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +24,9 @@ public class CommandRegister implements TabExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, 
+                             String label, String[] args) {
+        
         if (!(sender instanceof Player)) {
             sender.sendMessage(ConfigFile.getLocal("console.console_not_allowed"));
             return true;
@@ -46,10 +47,16 @@ public class CommandRegister implements TabExecutor {
             }
             
             password = password.substring(0, password.length()-1);
-            PlayerSession playersession = PlayerStorage.getPlayerSession(player.getUniqueId());
+            PlayerSession playersession 
+                    = PlayerStorage
+                    .getPlayerSession(player.getUniqueId());
 
-            if (playersession.isAuthorized() || playersession.getPasswordHash() != null) {
-                sender.sendMessage(ConfigFile.getLocal("register.already_registered"));
+            if (playersession.isAuthorized() 
+                    || playersession.getPasswordHash() != null) {
+                
+                sender.sendMessage(
+                        ConfigFile.getLocal("register.already_registered"));
+                
                 return;
             }
 
@@ -58,13 +65,12 @@ public class CommandRegister implements TabExecutor {
                 playersession.setPasswordHash(hash);
                 playersession.setAuthorized(true);
 
-                // TODO: make this not such a quick fix
-                if (player.getGameMode() == GameMode.SPECTATOR) {
-                    Bukkit.getScheduler().runTask(pt, () -> player.setGameMode(GameMode.SURVIVAL));
-                }
+                Bukkit.getScheduler().runTask(pt, () -> 
+                        player.setGameMode(playersession.getGamemode()));
 
-                sender.sendMessage(ConfigFile.getRegisterMsg(player.getDisplayName()));
-                return;
+                sender.sendMessage(
+                        ConfigFile.getRegisterMsg(player.getDisplayName()));
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -73,7 +79,9 @@ public class CommandRegister implements TabExecutor {
     }
 
     @Override
-    public List onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List onTabComplete(CommandSender sender, Command command, 
+                              String alias, String[] args) {
+        
         return Collections.emptyList();
     }
 }

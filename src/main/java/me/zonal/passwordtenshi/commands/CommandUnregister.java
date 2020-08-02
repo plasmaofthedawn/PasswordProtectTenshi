@@ -6,6 +6,7 @@ import me.zonal.passwordtenshi.player.PlayerSession;
 import me.zonal.passwordtenshi.player.PlayerStorage;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,28 +21,39 @@ public class CommandUnregister implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, 
+                             String label, String[] args) {
+        
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ConfigFile.getLocal("console.console_not_allowed"));
+            sender.sendMessage(
+                    ConfigFile.getLocal("console.console_not_allowed"));
+            
             return true;
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(pt, () -> {
 
             Player player = (Player) sender;
-            PlayerSession playersession = PlayerStorage.getPlayerSession(player.getUniqueId());
+            PlayerSession playersession 
+                    = PlayerStorage
+                    .getPlayerSession(player.getUniqueId());
 
             try {
                 playersession.removePasswordHash();
-                sender.sendMessage(ConfigFile.getLocal("unregister.player_unregister"));
+                sender.sendMessage(
+                        ConfigFile.getLocal("unregister.player_unregister"));
+                
                 playersession.setAuthorized(false);
-
-                player.sendMessage(ConfigFile.getLocal("unregister.register_again"));
-
+                playersession.setGamemode(player.getGameMode());
+                Bukkit.getScheduler().runTask(pt, () -> 
+                        player.setGameMode(GameMode.SPECTATOR));
+                
+                player.sendMessage(
+                        ConfigFile.getLocal("unregister.register_again"));
+                
                 playersession.registerLoginReminder();
-
-                return;
-            } catch (Exception e) {
+                
+            } catch (IllegalArgumentException | NullPointerException e) {
                 e.printStackTrace();
             }
         });

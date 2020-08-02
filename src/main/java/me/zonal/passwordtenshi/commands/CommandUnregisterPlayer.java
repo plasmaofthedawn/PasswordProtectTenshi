@@ -6,6 +6,7 @@ import me.zonal.passwordtenshi.player.PlayerSession;
 import me.zonal.passwordtenshi.player.PlayerStorage;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,19 +23,30 @@ public class CommandUnregisterPlayer implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-         if (!(sender instanceof Player) && !(sender instanceof ConsoleCommandSender)) {
-            sender.sendMessage(ConfigFile.getLocal("unregisterplayer.unrecognized_execution"));
+    public boolean onCommand(CommandSender sender, Command command, 
+                             String label, String[] args) {
+        
+         if (!(sender instanceof Player) 
+                 && !(sender instanceof ConsoleCommandSender)) {
+             
+            sender.sendMessage(
+                    ConfigFile.getLocal(
+                            "unregisterplayer.unrecognized_execution"));
+            
             return true;
          }
 
          if (!(sender instanceof ConsoleCommandSender) && !sender.isOp()) {
-             sender.sendMessage(ConfigFile.getLocal("unregisterplayer.player_not_op"));
+             sender.sendMessage(
+                     ConfigFile.getLocal("unregisterplayer.player_not_op"));
+             
              return true;
          }
 
          if (args.length == 0) {
-             sender.sendMessage(ConfigFile.getLocal("unregisterplayer.no_arguments"));
+             sender.sendMessage(
+                     ConfigFile.getLocal("unregisterplayer.no_arguments"));
+             
              return false;
          }
 
@@ -43,7 +55,8 @@ public class CommandUnregisterPlayer implements CommandExecutor {
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(ConfigFile.getLocal("unregisterplayer.player_not_online"));
+                sender.sendMessage(
+                        ConfigFile.getLocal("unregisterplayer.player_not_online"));
                 return;
             }
 
@@ -52,17 +65,27 @@ public class CommandUnregisterPlayer implements CommandExecutor {
             try {
                 playersession.removePasswordHash();
                 playersession.setAuthorized(false);
-                sender.sendMessage(ConfigFile.getLocal("unregisterplayer.successful_unregister"));
-                player.sendMessage(ConfigFile.getLocal("unregisterplayer.target_player_unregister"));
-                player.sendMessage(ConfigFile.getLocal("unregister.register_again"));
+                sender.sendMessage(
+                        ConfigFile.getLocal(
+                                "unregisterplayer.successful_unregister"));
+                
+                player.sendMessage(
+                        ConfigFile.getLocal(
+                                "unregisterplayer.target_player_unregister"));
+                
+                player.sendMessage(
+                        ConfigFile.getLocal(
+                                "unregister.register_again"));
+                
+                playersession.setGamemode(player.getGameMode());
+                Bukkit.getScheduler().runTask(pt, () -> 
+                        player.setGameMode(GameMode.SPECTATOR));
 
                 playersession.registerLoginReminder();
-
-                return;
-            } catch (Exception e) {
+            } catch (IllegalArgumentException | NullPointerException e) {
                 e.printStackTrace();
             }
         });
-        return false;
+        return true;
     }
 }

@@ -5,17 +5,17 @@ import me.zonal.passwordtenshi.database.*;
 import me.zonal.passwordtenshi.utils.ConfigFile;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.player.*;
 import org.bukkit.entity.Player;
+import org.bukkit.GameMode;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 public class PlayerSession {
 
     private boolean authorized;
+    private GameMode gamemode;
     private final Player player;
     private final UUID uuid;
     private static Database database;
@@ -24,6 +24,7 @@ public class PlayerSession {
 
     public PlayerSession(Player player){
         this.player = player;
+        this.gamemode = player.getGameMode();
         this.uuid = player.getUniqueId();
         this.authorized = false;
     }
@@ -44,6 +45,14 @@ public class PlayerSession {
     public boolean isAuthorized(){
         if (uuid == null) { return false; }
         return authorized;
+    }
+
+    public void setGamemode(GameMode gamemode){
+        this.gamemode = gamemode;
+    }
+
+    public GameMode getGamemode(){
+        return this.gamemode;
     }
 
     public void setAuthorized(boolean authorized) {
@@ -68,7 +77,7 @@ public class PlayerSession {
         final boolean registered = getPasswordHash() != null;
         final int[] times = {0};
         Bukkit.getScheduler().runTaskAsynchronously(pt, () -> {
-            while (player.isOnline()){ //dont check both isonline and isauthorized as isauthorized will return null pointer if player offline
+            while (player.isOnline()){ 
                 if(!isAuthorized()){
                     if (!registered){
                         player.sendMessage(ConfigFile.getLocal("register.first_message"));
@@ -85,7 +94,9 @@ public class PlayerSession {
                 }
                 times[0]++;
                 if (times[0] >= 12){
-                    Bukkit.getScheduler().runTask(pt, () -> player.kickPlayer(ConfigFile.getLocal("console.afk_kick")));
+                    Bukkit.getScheduler().runTask(pt, () -> 
+                            player.kickPlayer(
+                            ConfigFile.getLocal("console.afk_kick")));
                     break;
                 }
             }
